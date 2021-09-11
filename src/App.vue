@@ -1,20 +1,24 @@
 <template>
-  <MainComponent msg="Welcome to Your Vue.js App"/>
+  <MainComponent msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
-import MainComponent from './components/MainComponent.vue'
+import MainComponent from "./components/MainComponent.vue";
+window._ = require('lodash');
+window.mc=require('monaco-editor');
+//window._editor = require('vs/editor/editor.main');
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    MainComponent
-  }
-}
+    MainComponent,
+  },
+};
 </script>
+
+
 
 <style>
 #app {
-  
 }
 </style>
