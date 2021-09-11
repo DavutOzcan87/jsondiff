@@ -13,5 +13,7 @@ export default {
 <style scoped>
     .editor{
         background: red;
+        width: 40vw;
+        height: 200px;
     }
 </style>>
