@@ -2,8 +2,8 @@
 
 <template>
   <div class="main">
-   <editor-component/>
-   <editor-component/>
+   <editor-component title="left-component" editorId="editor-left"/>
+   <editor-component title="right-component" editorId="editor-right"/>
   </div>
 </template>
 

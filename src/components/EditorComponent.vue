@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
-      <span>Editor Component</span>
-      <div id="myeditor" class="myeditor" />
+      <span>{{title}}</span>
+      <div v-bind:id="editorId" class="myeditor" />
   </div>
  
 </template>
@@ -10,14 +10,19 @@
 import {onMounted} from 'vue'
 export default {
     name:"EditorComponent",
-    setup(){
+    setup(props){
         onMounted(()=>{
             console.log("editor mounted");
-            window.mc.editor.create(document.getElementById('myeditor'), {
+            window.mc.editor.create(document.getElementById(props.editorId), {
 					value: '{}',
-					language: 'json'
+					language: 'json',
+                    theme: 'vs-dark'
 				});
         })
+    },
+    props:{
+        title: String,
+        editorId:String
     }
 }
 
@@ -26,14 +31,13 @@ export default {
 
 <style scoped>
     .editor{
-        background: red;
         width: 40vw;
         /* height: 200px; */
     }
 
     .myeditor{
         width: 100%;
-        height: 480px;
+        height: 80vh;
         background: yellow;
     }
 </style>>

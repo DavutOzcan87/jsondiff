@@ -20,5 +20,11 @@ export default {
 
 <style>
 #app {
+  background-color: #333333;
+  height: 100vh;
+}
+
+body{
+  margin: 0px;
 }
 </style>
