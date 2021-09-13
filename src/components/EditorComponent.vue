@@ -32,7 +32,7 @@ export default {
     }
 
     .myeditor{
-        width: 640px;
+        width: 100%;
         height: 480px;
         background: yellow;
     }
