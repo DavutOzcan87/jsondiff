@@ -3,6 +3,7 @@
 <template>
   <div class="main">
    <editor-component title="left-component" editorId="editor-left"/>
+   <control-panel-component></control-panel-component>
    <editor-component title="right-component" editorId="editor-right"/>
   </div>
 </template>
@@ -12,6 +13,7 @@
 <script>
 
 import EditorComponent from './EditorComponent.vue'
+import ControlPanelComponent from './ControlPanel.vue'
 
 export default {
   name: 'MainComponent',
@@ -19,7 +21,8 @@ export default {
     msg: String
   },
   components:{
-    EditorComponent
+    EditorComponent,
+    ControlPanelComponent
   }
 }
 </script>
