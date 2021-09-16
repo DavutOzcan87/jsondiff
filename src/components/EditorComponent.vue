@@ -8,16 +8,20 @@
 
 <script>
 import {onMounted} from 'vue'
+import {editorService} from './editorService'
 export default {
     name:"EditorComponent",
     setup(props){
         onMounted(()=>{
             console.log("editor mounted");
-            window.mc.editor.create(document.getElementById(props.editorId), {
+            var editor = window.mc.editor.create(document.getElementById(props.editorId), {
 					value: '{}',
 					language: 'json',
                     theme: 'vs-dark'
 				});
+            console.log('editorService',editorService);
+            editorService.editors[props.editorId] = editor;
+            console.log(props.editorId , editor);
         })
     },
     props:{
