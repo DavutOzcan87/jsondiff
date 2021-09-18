@@ -1,16 +1,23 @@
 <template>
   <div class="controlPanel">
-      <button value="Sample" >Load Sample</button>
-      <span>Sample</span>
-      <span>Sample</span>
-      <span>Sample</span>
-      <span>Sample</span>
+      <button class="btn" v-on:click="loadSample" value="Sample" >Load Sample</button>
+      <button class="btn" v-on:click="compare" >Compare</button>
   </div>
 </template>
 
 <script>
+import {editorService} from './editorService'
+
 export default {
-    name:"ControlPanelComponent"
+    name:"ControlPanelComponent",
+    methods:{
+        loadSample: function(){
+            editorService.loadSampleData();
+        },
+        compare:function(){
+            editorService.compare();
+        }
+    }
 }
 </script>
 
@@ -18,6 +25,10 @@ export default {
     .controlPanel{
         display: flex;
         flex-direction: column;
-        background:#7F00FF;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn{
+        
     }
 </style>
