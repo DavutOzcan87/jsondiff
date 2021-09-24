@@ -1,7 +1,7 @@
 
 const ROOT="$";
 
-class JsonElement{
+class DiffElement{
 
     constructor(){
         this.key=undefined;
@@ -15,7 +15,20 @@ class JsonElement{
 }
 
 class JsonDiffService{
-
+    findDiffs(first,second){
+        const result = {    
+        };
+        const firstFieldNames = Object.getOwnPropertyNames(first);
+        const secondFieldNames = Object.getOwnPropertyNames(second);
+        for (const prop of Object.getOwnPropertyNames(first)) {
+            if(!secondFieldNames.includes(prop)){
+                result.isRemoved = true;
+                result.key = "$."+prop;
+            }
+        }
+        return result;
+    }
+    
 }
 
 const jsonDiffService = new JsonDiffService();
