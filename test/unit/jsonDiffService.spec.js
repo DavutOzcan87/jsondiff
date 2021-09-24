@@ -54,3 +54,29 @@ test('should add new fields',()=>{
         }
     );
 });
+
+
+test('should find add and removed ', ()=>{
+    const first={
+        "name":"test"
+    };
+    const second = {
+        isTrue: false
+    };
+    const result = jsonDiffService.findDiffs(first,second);
+    expect(result).toEqual(
+        {
+            key:"$",
+            children:[
+                {
+                    key:"$.name",
+                    isRemoved:true
+                },
+                {
+                    key:"$.isTrue",
+                    isAdd: true
+                }
+            ]
+        }
+    );
+});
