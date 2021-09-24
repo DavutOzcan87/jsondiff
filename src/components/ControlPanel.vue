@@ -2,6 +2,7 @@
   <div class="controlPanel">
       <button class="btn" v-on:click="loadSample" value="Sample" >Load Sample</button>
       <button class="btn" v-on:click="compare" >Compare</button>
+      <button class="btn" v-on:click="clear" >Clear</button>
   </div>
 </template>
 
@@ -16,6 +17,9 @@ export default {
         },
         compare:function(){
             editorService.compare();
+        },
+        clear: function () {
+            editorService.clear();
         }
     }
 }

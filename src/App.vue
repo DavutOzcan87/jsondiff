@@ -27,4 +27,12 @@ export default {
 body{
   margin: 0px;
 }
+
+.newLine{
+  background: green !important;
+}
+
+.missingLine{
+  background: red !important;
+}
 </style>

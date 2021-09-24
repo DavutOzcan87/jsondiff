@@ -1,3 +1,5 @@
+import {Range} from 'monaco-editor'
+
 const leftSample = {
     name:"John",
     age:33,
@@ -9,6 +11,11 @@ const rightSample={
     age:35,
     hobbies:["walking"]
 }
+
+var decorations = [
+	{ range: new Range(3,5,3,14), options: { inlineClassName: 'newLine' }}
+];
+
 class EditorService {
     constructor(){
         this.editors={};
@@ -27,7 +34,10 @@ class EditorService {
         this.rightEditor().setValue(JSON.stringify(rightSample,undefined,4));
     }
     compare(){
-        alert("Not Implemented Yet");
+        this.rightEditor().deltaDecorations([], decorations);
+    }
+    clear(){
+        this.rightEditor().deltaDecorations([],[{}]);
     }   
 }
 
