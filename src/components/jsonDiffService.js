@@ -26,6 +26,12 @@ class JsonDiffService{
                 result.key = "$."+prop;
             }
         }
+        for (const name of secondFieldNames) {
+            if(!firstFieldNames.includes(name)){
+                result.key = "$."+name;
+                result.isAdd = true;
+            }
+        }
         return result;
     }
     

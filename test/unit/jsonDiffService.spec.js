@@ -26,3 +26,18 @@ test('should return removed if a field is removed',()=>{
         }
     );
 });
+
+test('should add new fields',()=>{
+    const first = {
+    };
+    const second = {
+        "name":"test"
+    };
+    const result = jsonDiffService.findDiffs(first,second);
+    expect(result).toEqual(
+        {
+            key:"$.name",
+            isAdd:true
+        }
+    );
+});
