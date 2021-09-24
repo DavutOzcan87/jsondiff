@@ -2,12 +2,12 @@ import {Range} from 'monaco-editor'
 
 const leftSample = {
     name:"John",
-    age:33,
+    hasChild: false,
     hobbies:["reading"]
 };
 
 const rightSample={
-    name:"John",
+    hasChild: true,
     age:35,
     hobbies:["walking"]
 }
