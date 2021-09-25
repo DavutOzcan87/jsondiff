@@ -22,7 +22,7 @@ test('should return removed if a field is removed',()=>{
     };
     const second = {};
     const result = jsonDiffService.findDiffs(first,second);
-    expect(result).toEqual(
+    expect(result).toMatchObject(
         {
             key:"$",
             children:[
@@ -42,7 +42,7 @@ test('should add new fields',()=>{
         "name":"test"
     };
     const result = jsonDiffService.findDiffs(first,second);
-    expect(result).toEqual(
+    expect(result).toMatchObject(
         {
             key:"$",
             children:[
@@ -64,7 +64,7 @@ test('should find add and removed ', ()=>{
         isTrue: false
     };
     const result = jsonDiffService.findDiffs(first,second);
-    expect(result).toEqual(
+    expect(result).toMatchObject(
         {
             key:"$",
             children:[
@@ -76,6 +76,73 @@ test('should find add and removed ', ()=>{
                     key:"$.isTrue",
                     isAdd: true
                 }
+            ]
+        }
+    );
+});
+
+test('should add index',()=>{
+    const first = {
+        "name":"test",
+        "salary":50 
+    };
+    const second = {
+        "name":"test",
+        age: 21,
+        "salary":50 
+    };
+    const result = jsonDiffService.findDiffs(first,second);
+    expect(result).toMatchObject(
+        {
+            key:"$",
+            children:[
+                {
+                   isAdd: true,
+                   index: 1
+                }
+            ]
+        }
+    );
+});
+
+test('should add index when removed',()=>{
+    const first = {
+        "name":"test",
+        "salary":50,
+        age: 21 
+    };
+    const second = {
+        "name":"test",
+        "salary":50 
+    };
+    const result = jsonDiffService.findDiffs(first,second);
+    expect(result).toMatchObject(
+        {
+            key:"$",
+            children:[
+                {
+                   isRemoved: true,
+                   index: 2
+                }
+            ]
+        }
+    );
+});
+
+test('should add value lenght',()=>{
+    const first = {
+    };
+    const second = {
+        "salary":50,
+        isNew: true,
+        str:"someteststring" 
+    };
+    const result = jsonDiffService.findDiffs(first,second);
+    expect(result).toMatchObject(
+        {
+            key:"$",
+            children:[
+                { valueLength: 2, type:"number" },{ valueLength: 4,type: "boolean"},{ valueLength: 14,type: "string"}
             ]
         }
     );
