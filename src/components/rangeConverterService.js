@@ -13,7 +13,7 @@ class RangeConverterService {
         let startLineNumber = diffElement.index+2;
         let startColumn = tabLen;
         let endLineNumber = diffElement.index+2;
-        let endColumn = diffElement.key.length-1 +startColumn+2+diffElement.valueLenght + brachetLen ;
+        let endColumn = diffElement.key.length-1 +startColumn+2+diffElement.valueLength + brachetLen +1 ;
         let className = "";
         return {
             startLineNumber,

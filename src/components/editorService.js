@@ -1,5 +1,6 @@
 import {Range} from 'monaco-editor'
-
+import {ranceConverterService} from './rangeConverterService'
+import {jsonDiffService} from './jsonDiffService'
 const leftSample = {
     name:"John",
     hasChild: false,
@@ -34,10 +35,21 @@ class EditorService {
         this.rightEditor().setValue(JSON.stringify(rightSample,undefined,4));
     }
     compare(){
-        this.rightEditor().deltaDecorations([], decorations);
+        let first = JSON.parse(this.leftEditor().getValue());
+        let second = JSON.parse(this.rightEditor().getValue());
+
+        let diffs = jsonDiffService.findDiffs(first,second).children;
+        console.log("diffs",diffs);
+        let onlyAdditions = diffs.filter(o=> o.isAdd === true);
+        let ranges = ranceConverterService.convert(onlyAdditions);
+        let decorations = ranges.map(o=> {
+           return { range: new Range(o.startLineNumber,o.startColumn,o.endLineNumber,o.endColumn), options: { inlineClassName: 'newLine' }};
+        } );
+        console.log("decorations",decorations);
+        this.rightEditor().deltaDecorations([],decorations);
     }
     clear(){
-        this.rightEditor().deltaDecorations([],[{}]);
+        this.rightEditor().deltaDecorations(["newLine"],[{}]);
     }   
 }
 

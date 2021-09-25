@@ -14,7 +14,7 @@ test('should calculate start stop indexes for single field' , ()=>{
         isRemoved: true,
         index: 0,
         type:"string",
-        valueLenght:4
+        valueLength:4
     };
     var result = ranceConverterService.convert([sample]);
     expect(result).toMatchObject([{
@@ -22,5 +22,16 @@ test('should calculate start stop indexes for single field' , ()=>{
             startColumn: 5,
             endLineNumber: 2,
             endColumn: 18
+        }]);
+});
+
+test('should calculate case ', () => {
+    let sample = {key: '$.age', isAdd: true, index: 1, valueLength: 2, type: 'number'};
+    var result = ranceConverterService.convert([sample]);
+    expect(result).toMatchObject([{
+            startLineNumber: 3,
+            startColumn: 5,
+            endLineNumber: 3,
+            endColumn: 14
         }]);
 });
