@@ -1,17 +1,7 @@
 import {Range} from 'monaco-editor'
 import {ranceConverterService} from './rangeConverterService'
 import {jsonDiffService} from './jsonDiffService'
-const leftSample = {
-    name:"John",
-    hasChild: false,
-    hobbies:["reading"]
-};
-
-const rightSample={
-    hasChild: true,
-    age:35,
-    hobbies:["walking"]
-}
+import { samples } from './samples';
 
 var decorations = [
 	{ range: new Range(3,5,3,14), options: { inlineClassName: 'newLine' }}
@@ -30,9 +20,9 @@ class EditorService {
         return this.editors['editor-right'];
     }
 
-    loadSampleData(){
-        this.leftEditor().setValue(JSON.stringify(leftSample,undefined,4));
-        this.rightEditor().setValue(JSON.stringify(rightSample,undefined,4));
+    loadSampleData(sampleIndex){
+        this.leftEditor().setValue(JSON.stringify(samples[sampleIndex].left,undefined,4));
+        this.rightEditor().setValue(JSON.stringify(samples[sampleIndex].right,undefined,4));
     }
     compare(){
         let first = JSON.parse(this.leftEditor().getValue());
