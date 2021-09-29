@@ -142,7 +142,9 @@ test('should add value lenght',()=>{
         {
             key:"$",
             children:[
-                { valueLength: 2, type:"number" },{ valueLength: 4,type: "boolean"},{ valueLength: 14,type: "string"}
+                { valueLength: 2, type:"number" },
+                { valueLength: 4,type: "boolean"},
+                { valueLength: 14,type: "string"}
             ]
         }
     );

@@ -21,7 +21,7 @@ test('should calculate start stop indexes for single field' , ()=>{
             startLineNumber: 2,
             startColumn: 5,
             endLineNumber: 2,
-            endColumn: 18
+            endColumn: 19
         }]);
 });
 
