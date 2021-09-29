@@ -22,7 +22,7 @@ class Dimension {
   }
 }
 
-const parseObject = function(obj) {
+const parse = function(obj) {
   console.log("parse object called", obj);
   if (obj === null || obj == undefined) return EMPTY;
 
@@ -43,4 +43,4 @@ const EMPTY = {
   children: [],
 };
 
-export { parseObject };
+export { parse };

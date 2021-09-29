@@ -1,11 +1,11 @@
-import { parseObject } from "../../src/components/jsonnode";
+import { parse } from "../../src/components/jsonnode";
 
 test("should parse flat object", () => {
   const sample = {
     name: "test",
     age: 25,
   };
-  let parsed = parseObject(sample);
+  let parsed = parse(sample);
   expect(parsed).toMatchObject({
     dimension: {
       startLineNumber: 1,
@@ -18,7 +18,7 @@ test("should parse flat object", () => {
 
 test("should parse primitive object", () => {
   const sample = 25;
-  let parsed = parseObject(sample);
+  let parsed = parse(sample);
   expect(parsed).toMatchObject({
     dimension: {
       startLineNumber: 1,
