@@ -20,10 +20,10 @@ test("should parse flat object", () => {
         // },
         children: [
             {
-                dimension: dim(2, 4, 2, 19)
+                dimension: dim(2, 5, 2, 19)
             },
             {
-                dimension: dim(3, 4, 3, 14)
+                dimension: dim(3, 5, 3, 14)
             }
         ]
     });
