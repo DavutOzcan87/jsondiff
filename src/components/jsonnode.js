@@ -102,6 +102,7 @@ const parseInternal = function(obj, point, key) {
 
 function parseOnject(obj, point, key) {
     let result = new JsonObject(key);
+    result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
     for (let [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
@@ -113,6 +114,7 @@ function parseOnject(obj, point, key) {
 
 function parseArray(obj, point, key) {
     let result = new JsonArray(key);
+    result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
     for (let [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);

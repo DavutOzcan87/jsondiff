@@ -77,3 +77,22 @@ test("should parse flat array with primitives", () => {
         ]
     });
 });
+
+test("should parse array with objects", () => {
+    const sample = [
+        {
+            name: "test",
+            age: 25
+        }
+    ];
+    const parsed = parse(sample);
+    expect(parsed).toMatchObject({
+        dimension: dim(1, 1, 6, 23),
+        type: "array",
+        children: [
+            {
+                dimension: dim(2, 5, 5, 23)
+            }
+        ]
+    });
+});
