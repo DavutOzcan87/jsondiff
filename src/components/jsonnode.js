@@ -22,7 +22,10 @@ class JsonPrimitive {
     constructor(key, value) {
         this.key = key;
         this.value = value;
-        let length = JSON.stringify(value).length + key.length + 4;
+        let length = JSON.stringify(value).length;
+        if (key.length > 0) {
+            length += key.length + 4;
+        }
         this.dimension = new Dimension(1, 1, 1, length + 1);
         this.children = [];
         this.type = "primitive";
