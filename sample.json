@@ -1,6 +1,12 @@
-[
-    {
-        "name": "test",
-        "age": 25
+{
+    "name": "test",
+    "father": {
+        "name": "father",
+        "age": 45
+    },
+    "mother": {
+        "name": "julia",
+        "age": 55,
+        "isFemale": true
     }
-]
+}

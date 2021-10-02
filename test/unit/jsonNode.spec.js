@@ -96,3 +96,33 @@ test("should parse array with objects", () => {
         ]
     });
 });
+
+test("should parse nested objects", () => {
+    const sample = {
+        name: "test",
+        father: {
+            name: "father",
+            age: 45
+        },
+        mother: {
+            name: "julia",
+            age: 55,
+            isFemale: true
+        }
+    };
+    const parsed = parse(sample);
+    expect(parsed).toMatchObject({
+        //dimension: dim(1, 1, 12, 25),
+        children: [
+            {
+                dimension: dim(2, 5, 2, 19)
+            },
+            {
+                dimension: dim(3, 5, 6, 25)
+            },
+            {
+                dimension: dim(7, 5, 11, 25)
+            }
+        ]
+    });
+});
