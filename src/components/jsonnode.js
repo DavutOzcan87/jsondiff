@@ -1,4 +1,20 @@
-class JsonArray {}
+class JsonArray {
+    constructor(key) {
+        this.key = key;
+        this.children = [];
+        this.dimension = new Dimension(1, 1, 0, 0);
+        this.type = "array";
+    }
+
+    addChildren(parsed) {
+        this.children.push(parsed);
+        this.dimension.expand(parsed.dimension);
+    }
+
+    onChildsFinilized() {
+        this.dimension.endLineNumber++;
+    }
+}
 
 class JsonObject {
     constructor(key) {
@@ -75,10 +91,10 @@ const parseInternal = function(obj, point, key) {
         return EMPTY;
     }
 
-    if (typeof obj === "object") {
+    if (Array.isArray(obj)) {
+        return parseArray(obj, point, key);
+    } else if (typeof obj === "object") {
         return parseOnject(obj, point, key);
-    } else if (Array.isArray(obj)) {
-        return EMPTY;
     } else {
         return parsePrimitive(obj, point, key);
     }
@@ -90,6 +106,17 @@ function parseOnject(obj, point, key) {
     for (let [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
         result.addChildren(parseInternal(value, currentPoint, key));
+    }
+    result.onChildsFinilized();
+    return result;
+}
+
+function parseArray(obj, point, key) {
+    let result = new JsonArray(key);
+    let currentPoint = new Point(point.line, point.column + TAB_SIZE);
+    for (let [key, value] of Object.entries(obj)) {
+        currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
+        result.addChildren(parseInternal(value, currentPoint, ""));
     }
     result.onChildsFinilized();
     return result;

@@ -54,3 +54,26 @@ test("should parse primitive object", () => {
         type: "primitive"
     });
 });
+
+test("should parse flat array with primitives", () => {
+    const sample = [1, 22, 333, 4444];
+    const parsed = parse(sample);
+    expect(parsed).toMatchObject({
+        dimension: dim(1, 1, 6, 9),
+        type: "array",
+        children: [
+            {
+                dimension: dim(2, 5, 2, 6)
+            },
+            {
+                dimension: dim(3, 5, 3, 7)
+            },
+            {
+                dimension: dim(4, 5, 4, 8)
+            },
+            {
+                dimension: dim(5, 5, 5, 9)
+            }
+        ]
+    });
+});
