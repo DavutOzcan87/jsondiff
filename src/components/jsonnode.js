@@ -47,7 +47,7 @@ class JsonPrimitive {
         this.type = "primitive";
     }
 
-    shift(lineNumber) {
+    shift(point) {
         this.dimension.startLineNumber += lineNumber;
         this.dimension.endLineNumber += lineNumber;
     }
@@ -106,7 +106,9 @@ function parseOnject(obj, point, key) {
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
     for (let [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
-        result.addChildren(parseInternal(value, currentPoint, key));
+        let child = parseInternal(value, currentPoint, key);
+        result.addChildren(child);
+        currentPoint.line = child.dimension.endLineNumber - 1;
     }
     result.onChildsFinilized();
     return result;
@@ -118,7 +120,9 @@ function parseArray(obj, point, key) {
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
     for (let [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
-        result.addChildren(parseInternal(value, currentPoint, ""));
+        let child = parseInternal(value, currentPoint, "");
+        result.addChildren(child);
+        currentPoint.line = child.dimension.endLineNumber - 1;
     }
     result.onChildsFinilized();
     return result;
