@@ -4,12 +4,17 @@ class JsonObject {
     constructor(key) {
         this.key = key;
         this.children = [];
-        this.dimension = new Dimension(0, 0, 0, 0);
+        this.dimension = new Dimension(1, 1, 0, 0);
         this.type = "object";
     }
 
     addChildren(parsed) {
         this.children.push(parsed);
+        this.dimension.expand(parsed.dimension);
+    }
+
+    onChildsFinilized() {
+        this.dimension.endLineNumber++;
     }
 }
 
@@ -42,6 +47,11 @@ class Dimension {
         this.endLineNumber += point.line;
         this.startColumn += point.column;
         this.endColumn += point.column;
+    }
+
+    expand(dimension) {
+        this.endLineNumber = Math.max(this.endLineNumber, dimension.endLineNumber);
+        this.endColumn = Math.max(this.endColumn, dimension.endColumn);
     }
 }
 
@@ -78,6 +88,7 @@ function parseOnject(obj, point, key) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
         result.addChildren(parseInternal(value, currentPoint, key));
     }
+    result.onChildsFinilized();
     return result;
 }
 
