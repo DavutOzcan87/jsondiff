@@ -46,11 +46,6 @@ class JsonPrimitive {
         this.children = [];
         this.type = "primitive";
     }
-
-    shift(point) {
-        this.dimension.startLineNumber += lineNumber;
-        this.dimension.endLineNumber += lineNumber;
-    }
 }
 
 class Dimension {
@@ -81,11 +76,11 @@ class Point {
     }
 }
 
-const parse = function(obj) {
+const parse = function (obj) {
     return parseInternal(obj, new Point(0, 0), "");
 };
 
-const parseInternal = function(obj, point, key) {
+const parseInternal = function (obj, point, key) {
     console.log("parse object called", obj);
     if (obj === null || obj == undefined) {
         return EMPTY;
