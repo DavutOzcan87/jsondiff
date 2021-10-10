@@ -33,8 +33,13 @@ class EditorService {
         let decorations = onlyAdditions.map(o => {
             return { range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn), options: { inlineClassName: 'newLine' } };
         });
+        let leftEditorDecorations = diffs.filter(o => o.isRemoved === true)
+            .map(o => {
+                return { range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn), options: { inlineClassName: 'missingLine' } }
+            });
         console.log("decorations", decorations);
         this.rightEditor().deltaDecorations([], decorations);
+        this.leftEditor().deltaDecorations([], leftEditorDecorations);
     }
     clear() {
         this.rightEditor().deltaDecorations(["newLine"], [{}]);
