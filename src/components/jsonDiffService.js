@@ -41,8 +41,6 @@ class JsonDiffService {
 
         let ranges = this.toRange(children);
         const result = {
-            key: "$",
-            children: children,
             diff: ranges
         };
         console.log("result", result);
