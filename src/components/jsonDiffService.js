@@ -1,20 +1,7 @@
 import { parse } from "./jsonnode";
+import { ranceConverterService } from './rangeConverterService'
 
 
-const ROOT = "$";
-
-class DiffElement {
-
-    constructor() {
-        this.key = undefined;
-        this.index = undefined;
-        this.isRemoved = false;
-        this.isAddd = false;
-        //this.children=[];
-    }
-
-
-}
 
 
 function diffsUsingTree(first, second) {
@@ -25,13 +12,12 @@ function diffsUsingTree(first, second) {
     console.log("right", right);
 }
 
+
 class JsonDiffService {
     findDiffs(first, second) {
         diffsUsingTree(first, second);
-        const result = {
-            key: "$",
-            children: []
-        };
+
+        let children = [];
         const firstFieldNames = Object.getOwnPropertyNames(first);
         const secondFieldNames = Object.getOwnPropertyNames(second);
         for (const [index, name] of firstFieldNames.entries()) {
@@ -43,7 +29,7 @@ class JsonDiffService {
                     valueLength: first[name].toString().lenght,
                     type: typeof first[name]
                 }
-                result.children.push(temp);
+                children.push(temp);
             }
         }
         for (const [index, name] of secondFieldNames.entries()) {
@@ -55,12 +41,27 @@ class JsonDiffService {
                     valueLength: second[name].toString().length,
                     type: typeof second[name]
                 };
-                result.children.push(temp);
+                children.push(temp);
             }
         }
 
-
+        let ranges = this.toRange(children);
+        const result = {
+            key: "$",
+            children: children,
+            diff: ranges
+        };
+        console.log("result", result);
         return result;
+    }
+
+    toRange(children) {
+        let diffs = ranceConverterService.convert(children);
+        for (let index = 0; index < children.length; index++) {
+            diffs[index].isAdd = children[index].isAdd;
+            diffs[index].isRemoved = children[index].isRemoved;
+        }
+        return diffs;
     }
 
 }
