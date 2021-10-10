@@ -4,18 +4,12 @@ import { ranceConverterService } from './rangeConverterService'
 
 
 
-function diffsUsingTree(first, second) {
-    console.log("diff using tree called");
-    const left = parse(first);
-    const right = parse(second);
-    console.log("left", left);
-    console.log("right", right);
-}
+
 
 
 class JsonDiffService {
     findDiffs(first, second) {
-        diffsUsingTree(first, second);
+        this.diffsUsingTree(first, second);
 
         let children = [];
         const firstFieldNames = Object.getOwnPropertyNames(first);
@@ -62,6 +56,14 @@ class JsonDiffService {
             diffs[index].isRemoved = children[index].isRemoved;
         }
         return diffs;
+    }
+
+    diffsUsingTree(first, second) {
+        console.log("diff using tree called");
+        const left = parse(first);
+        const right = parse(second);
+        console.log("left", left);
+        console.log("right", right);
     }
 
 }
