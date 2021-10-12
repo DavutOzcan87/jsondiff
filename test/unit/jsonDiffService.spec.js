@@ -107,7 +107,6 @@ test("should add multiple additions", () => {
   };
   const result = jsonDiffService.findDiffs(first, second);
   expect(result).toMatchObject({
-    key: "$",
     diff: [
       { isAdd: true },
       { isAdd: true },
