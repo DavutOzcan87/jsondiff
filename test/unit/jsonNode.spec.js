@@ -126,3 +126,27 @@ test("should parse nested objects", () => {
         ]
     });
 });
+
+
+test("should set array index as key", () => {
+    const sample = [1, 22, 333, 4444];
+    const parsed = parse(sample);
+    expect(parsed).toMatchObject({
+        dimension: dim(1, 1, 6, 9),
+        type: "array",
+        children: [
+            {
+                key: 0
+            },
+            {
+                key: 1
+            },
+            {
+                key: 2
+            },
+            {
+                key: 3
+            }
+        ]
+    });
+});

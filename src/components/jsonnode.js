@@ -124,9 +124,11 @@ function parseArray(obj, point, key) {
     let result = new JsonArray(key);
     result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
+    let index = 0;
     for (let [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
-        let child = parseInternal(value, currentPoint, "");
+        let child = parseInternal(value, currentPoint, index);
+        index += 1;
         result.addChildren(child);
         currentPoint.line = child.dimension.endLineNumber - 1;
     }

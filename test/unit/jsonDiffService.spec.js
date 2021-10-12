@@ -115,25 +115,40 @@ test("should add multiple additions", () => {
   });
 });
 
-// test("should calculate for tested objects fields", () => {
-//   const first = {
-//     father: {
-//       name: "test",
-//     },
-//   };
-//   const second = {
-//     father: {
-//       name: "test",
-//       age: 25,
-//     },
-//   };
+test("should calculate for tested objects fields", () => {
+  const first = {
+    father: {
+      name: "test",
+    },
+  };
+  const second = {
+    father: {
+      name: "test",
+      age: 25,
+    },
+  };
 
-//   const result = jsonDiffService.findDiffs(first, second);
-//   expect(result).toMatchObject({
-//     diff: [
-//       {
-//         isAdd: true
-//       },
-//     ],
-//   });
-// });
+  const result = jsonDiffService.findDiffs(first, second);
+  expect(result).toMatchObject({
+    diff: [
+      {
+        isAdd: true
+      },
+    ],
+  });
+});
+
+
+test("should find when a new object added to array", () => {
+  const first = [{}];
+  const second = [{}, {}];
+
+  const result = jsonDiffService.findDiffs(first, second);
+  expect(result).toMatchObject({
+    diff: [
+      {
+        isAdd: true
+      },
+    ],
+  });
+});
