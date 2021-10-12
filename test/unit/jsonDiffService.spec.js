@@ -130,16 +130,9 @@ test("should add multiple additions", () => {
 
 //   const result = jsonDiffService.findDiffs(first, second);
 //   expect(result).toMatchObject({
-//     key: "$",
-//     children: [
+//     diff: [
 //       {
-//         isAdd: true,
-//         dimension: {
-//           startLineNumber: 4,
-//           startColumn: 5,
-//           endLineNumber: 4,
-//           endColumn: 12,
-//         },
+//         isAdd: true
 //       },
 //     ],
 //   });

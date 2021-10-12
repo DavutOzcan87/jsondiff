@@ -14,6 +14,10 @@ class JsonArray {
     onChildsFinilized() {
         this.dimension.endLineNumber++;
     }
+
+    isPrimitive() {
+        return false;
+    }
 }
 
 class JsonObject {
@@ -32,6 +36,9 @@ class JsonObject {
     onChildsFinilized() {
         this.dimension.endLineNumber++;
     }
+    isPrimitive() {
+        return false;
+    }
 }
 
 class JsonPrimitive {
@@ -45,6 +52,10 @@ class JsonPrimitive {
         this.dimension = new Dimension(1, 1, 1, length + 1);
         this.children = [];
         this.type = "primitive";
+    }
+
+    isPrimitive() {
+        return true;
     }
 }
 
