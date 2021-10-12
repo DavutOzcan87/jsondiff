@@ -82,7 +82,7 @@ class JsonDiffService {
         let result = [];
         for (let [key, value] of leftItems.entries()) {
             if (rightItems.has(key)) {
-                result.push(this.getDiffOfNodes(value, rightItems.get(key)));
+                result = result.concat(this.getDiffOfNodes(value, rightItems.get(key)));
             } else {
                 result.push(this.removed(value));
             }
