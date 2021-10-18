@@ -11,6 +11,7 @@ class JsonDiffService {
         for (let index = 0; index < children.length; index++) {
             diffs[index].isAdd = children[index].isAdd;
             diffs[index].isRemoved = children[index].isRemoved;
+            diffs[index].isValueChanged = children[index].isValueChanged;
         }
         return diffs;
     }
