@@ -1,50 +1,9 @@
 import { parse } from "./jsonnode";
-import { ranceConverterService } from './rangeConverterService'
-
-
-
-
-
-
+import { ranceConverterService } from "./rangeConverterService";
 
 class JsonDiffService {
     findDiffs(first, second) {
         return this.diffsUsingTree(first, second);
-
-        // let children = [];
-        // const firstFieldNames = Object.getOwnPropertyNames(first);
-        // const secondFieldNames = Object.getOwnPropertyNames(second);
-        // for (const [index, name] of firstFieldNames.entries()) {
-        //     if (!secondFieldNames.includes(name)) {
-        //         let temp = {
-        //             isRemoved: true,
-        //             key: "$." + name,
-        //             index,
-        //             valueLength: first[name].toString().lenght,
-        //             type: typeof first[name]
-        //         }
-        //         children.push(temp);
-        //     }
-        // }
-        // for (const [index, name] of secondFieldNames.entries()) {
-        //     if (!firstFieldNames.includes(name)) {
-        //         let temp = {
-        //             key: "$." + name,
-        //             isAdd: true,
-        //             index,
-        //             valueLength: second[name].toString().length,
-        //             type: typeof second[name]
-        //         };
-        //         children.push(temp);
-        //     }
-        // }
-
-        // let ranges = this.toRange(children);
-        // const result = {
-        //     diff: ranges
-        // };
-        // console.log("result", result);
-        // return result;
     }
 
     toRange(children) {
@@ -103,7 +62,7 @@ class JsonDiffService {
             startColumn: node.dimension.startColumn,
             endLineNumber: node.dimension.endLineNumber,
             endColumn: node.dimension.endColumn
-        }
+        };
     }
 
     removed(node) {
@@ -113,26 +72,22 @@ class JsonDiffService {
             startColumn: node.dimension.startColumn,
             endLineNumber: node.dimension.endLineNumber,
             endColumn: node.dimension.endColumn
-        }
+        };
     }
 
     getDiffOfPrimitive(left, right) {
         if (left.value !== right.value) {
             return {
-                isRemoved: true,
+                isValueChanged: true,
                 startLineNumber: right.dimension.startLineNumber,
                 startColumn: right.dimension.startColumn,
                 endLineNumber: right.dimension.endLineNumber,
                 endColumn: right.dimension.endColumn
-            }
-        }
-        else return [];
+            };
+        } else return [];
     }
-
 }
 
 const jsonDiffService = new JsonDiffService();
 
-export {
-    jsonDiffService
-}
+export { jsonDiffService };

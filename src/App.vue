@@ -35,4 +35,9 @@ body {
 .missingLine {
     background: rgba(255, 0, 0, 0.5) !important;
 }
+
+.valueChanged{
+    background: yellow;
+}
+
 </style>
