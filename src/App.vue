@@ -29,15 +29,15 @@ body {
 }
 
 .newLine {
-    background: green !important;
+    background: rgba(35, 155, 86,0.4) !important;
 }
 
 .missingLine {
-    background: rgba(255, 0, 0, 0.5) !important;
+    background: rgba(255, 0, 0, 0.4) !important;
 }
 
 .valueChanged{
-    background: yellow;
+    background: rgba(197, 197, 26, 0.432) !important;
 }
 
 </style>
