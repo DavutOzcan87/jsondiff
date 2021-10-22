@@ -1,10 +1,8 @@
-import { Range } from 'monaco-editor'
-import { jsonDiffService } from './jsonDiffService'
-import { samples } from './samples';
+import { Range } from "monaco-editor";
+import { jsonDiffService } from "./jsonDiffService";
+import { samples } from "./samples";
 
-var decorations = [
-    { range: new Range(3, 5, 3, 14), options: { inlineClassName: 'newLine' } }
-];
+var decorations = [{ range: new Range(3, 5, 3, 14), options: { inlineClassName: "newLine" } }];
 
 class EditorService {
     constructor() {
@@ -14,11 +12,11 @@ class EditorService {
 
     }
     leftEditor() {
-        return this.editors['editor-left'];
+        return this.editors["editor-left"];
     }
 
     rightEditor() {
-        return this.editors['editor-right'];
+        return this.editors["editor-right"];
     }
 
     loadSampleData(sampleIndex) {
@@ -33,16 +31,11 @@ class EditorService {
         this.writeFormatted(second, this.rightEditor());
         let diffs = jsonDiffService.findDiffs(first, second).diff;
         console.log("diffs", diffs);
-        let onlyAdditions = diffs.filter(o => o.isAdd === true);
-        let decorations = onlyAdditions.map(o => {
-            return { range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn), options: { inlineClassName: 'newLine' } };
-        });
-        let leftEditorDecorations = diffs.filter(o => o.isRemoved === true)
-            .map(o => {
-                return { range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn), options: { inlineClassName: 'missingLine' } }
-            });
-        console.log("decorations", decorations);
-        this.rightIds = this.rightEditor().deltaDecorations([], decorations);
+        let rightDecorations = this._extratRightDecorations(diffs);
+        let leftEditorDecorations = this._extractLeftDecorations(diffs);
+        console.log("right decorations", rightDecorations);
+        console.log("leftDecorations", leftEditorDecorations);
+        this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
         this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
 
     }
@@ -58,6 +51,28 @@ class EditorService {
 
     writeFormatted(obj, editor) {
         editor.setValue(JSON.stringify(obj, undefined, 4));
+    }
+
+    _extratRightDecorations(diffs) {
+        return diffs
+            .filter(o => o.isAdd === true || o.isValueChanged === true)
+            .map(o => {
+                return {
+                    range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn),
+                    options: { inlineClassName: o.isValueChanged === true ? "valueChanged" : "newLine" }
+                };
+            });
+    }
+
+    _extractLeftDecorations(diffs) {
+        return diffs
+            .filter(o => o.isRemoved === true)
+            .map(o => {
+                return {
+                    range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn),
+                    options: { inlineClassName: "missingLine" }
+                };
+            });
     }
 }
 
