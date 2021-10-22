@@ -9,6 +9,8 @@ var decorations = [
 class EditorService {
     constructor() {
         this.editors = {};
+        this.leftIds = undefined;
+        this.rightIds = undefined;
 
     }
     leftEditor() {
@@ -24,9 +26,11 @@ class EditorService {
         this.rightEditor().setValue(JSON.stringify(samples[sampleIndex].right, undefined, 4));
     }
     compare() {
+        this.clear();
         let first = JSON.parse(this.leftEditor().getValue());
         let second = JSON.parse(this.rightEditor().getValue());
-
+        this.writeFormatted(first, this.leftEditor());
+        this.writeFormatted(second, this.rightEditor());
         let diffs = jsonDiffService.findDiffs(first, second).diff;
         console.log("diffs", diffs);
         let onlyAdditions = diffs.filter(o => o.isAdd === true);
@@ -38,11 +42,22 @@ class EditorService {
                 return { range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn), options: { inlineClassName: 'missingLine' } }
             });
         console.log("decorations", decorations);
-        this.rightEditor().deltaDecorations([], decorations);
-        this.leftEditor().deltaDecorations([], leftEditorDecorations);
+        this.rightIds = this.rightEditor().deltaDecorations([], decorations);
+        this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
+
     }
     clear() {
-        this.rightEditor().deltaDecorations(["newLine"], [{}]);
+        //this.rightEditor().deltaDecorations(["newLine"], [{}]);
+        if (this.leftIds) {
+            this.leftEditor().deltaDecorations(this.leftIds, []);
+        }
+        if (this.rightIds) {
+            this.rightEditor().deltaDecorations(this.rightIds, []);
+        }
+    }
+
+    writeFormatted(obj, editor) {
+        editor.setValue(JSON.stringify(obj, undefined, 4));
     }
 }
 
