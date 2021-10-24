@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jsondiff
+  name: jsondiff
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsondiff
+  template:
+    metadata:
+      labels:
+        app: jsondiff
+    spec:
+      containers:
+        - image: davutozcan/jsondiff:1.0
+          name: jsondiff
