@@ -17,3 +17,16 @@ spec:
       containers:
         - image: davutozcan/jsondiff:1.0
           name: jsondiff
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jsondiff
+spec:
+  selector:
+    app: jsondiff
+  type: ClusterIP
+  ports:
+    - name: httpport
+      port: 80
+      targetPort: 80
