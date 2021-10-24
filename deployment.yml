@@ -30,3 +30,29 @@ spec:
     - name: httpport
       port: 80
       targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jsondiff
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: comparejson.davutozcan.info
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+    - host: comparejson.davutozcan.info
+      http:
+        paths:
+          - backend:
+              service:
+                name: jsondiff
+                port:
+                  number: 80
+            path: /
+            pathType: Exact
+  tls:
+    - hosts:
+        - comparejson.davutozcan.info
+      secretName: jsondiff
