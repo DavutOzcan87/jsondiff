@@ -1,6 +1,5 @@
 <template>
     <div class="editor">
-        <span>{{ title }}</span>
         <div v-bind:id="editorId" class="myeditor" />
     </div>
 </template>
