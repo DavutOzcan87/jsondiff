@@ -1,9 +1,11 @@
 <template>
+    <Header />
     <MainComponent msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
 import MainComponent from "./components/MainComponent.vue";
+import Header from "./components/Header.vue";
 window._ = require("lodash");
 window.mc = require("monaco-editor");
 //window._editor = require('vs/editor/editor.main');
@@ -12,6 +14,7 @@ export default {
     name: "App",
     components: {
         MainComponent,
+        Header,
     },
 };
 </script>
@@ -29,15 +32,14 @@ body {
 }
 
 .newLine {
-    background: rgba(35, 155, 86,0.4) !important;
+    background: rgba(35, 155, 86, 0.4) !important;
 }
 
 .missingLine {
     background: rgba(255, 0, 0, 0.4) !important;
 }
 
-.valueChanged{
+.valueChanged {
     background: rgba(197, 197, 26, 0.432) !important;
 }
-
 </style>
