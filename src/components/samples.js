@@ -86,6 +86,12 @@ const arrRight = [
     "yeast": "2124 - Bohemian Lager",
     "malts": "Special roast",
     "ibu": "76 IBU",
+    "time_zone": "Europe/Moscow",
+    "street_suffix": "Fields",
+    "city_suffix": "mouth",
+    "city_prefix": "South",
+    "state": "Mississippi",
+    "state_abbr": "VA",
     "alcohol": "3.0%",
     "blg": "10.5°Blg"
   },
@@ -117,6 +123,90 @@ const arrRight = [
   }
 ];
 
+const sample2Left = {
+  "id": 2441,
+  "uid": "95dedc0c-5898-412f-93a5-e313abd9687b",
+  "password": "C2RrpDz3yH",
+  "first_name": "Kesha",
+  "last_name": "Huels",
+  "username": "kesha.huels",
+  "email": "kesha.huels@email.com",
+  "avatar": "https://robohash.org/blanditiisquaerateum.png?size=300x300&set=set1",
+  "gender": "Polygender",
+  "phone_number": "+685 443.638.8975 x309",
+  "social_insurance_number": "334372778",
+  "date_of_birth": "1987-04-21",
+  "employment": {
+    "title": "Real-Estate Producer",
+    "key_skill": "Networking skills"
+  },
+  "address": {
+    "city": "Koeppmouth",
+    "street_name": "Araceli Groves",
+    "street_address": "37073 Heaney View",
+    "zip_code": "83773-9758",
+    "state": "South Dakota",
+    "country": "United States",
+    "coordinates": {
+      "lat": -70.15962359973375,
+      "lng": -13.418787057481836
+    }
+  },
+  "credit_card": {
+    "cc_number": "5473-4970-7897-0147"
+  },
+  "subscription": {
+    "plan": "Platinum",
+    "status": "Blocked",
+    "payment_method": "Paypal",
+    "term": "Payment in advance"
+  }
+};
+
+const sample2Right = {
+  "id": 2441,
+  "uid": "95dedc0c-5898-412f-93a5-e313abd9687b",
+  "password": "C2RrpDz3yH",
+  "first_name": "Kesha",
+  "last_name": "Huels",
+  "username": "kesha.huels",
+  "avatar": "https://robohash.org/blanditiisquaerateum.png?size=300x300&set=set1",
+  "gender": "Polygender",
+  "phone_number": "+685 443.638.8975 x309",
+  "date_of_birth": "1987-04-21",
+  "brand": "Fosters",
+  "name": "Alpha King Pale Ale",
+  "style": "Sour Ale",
+  "hop": "Willamette",
+  "yeast": "3711 - French Saison",
+  "malts": "Black malt",
+  "ibu": "27 IBU",
+  "alcohol": "7.6%",
+  "blg": "13.4°Blg",
+  "employment": {
+    "title": "Real-Estate Producer",
+    "key_skill": "Networking skills"
+  },
+  "address": {
+    "city": "Koeppmouth",
+    "street_name": "Araceli Groves",
+    "street_address": "37073 Heaney View",
+    "zip_code": "83773-9768",
+    "state": "South Dakota",
+    "country": "United States",
+    "coordinates": {
+      "lat": -70.15962359973375
+    }
+  },
+  "credit_card": {
+    "cc_number": "5473-4970-7897-0147"
+  },
+  "subscription": {
+    "plan": "Premium",
+    "status": "Blocked",
+    "term": "Payment in advance"
+  }
+};
 
 const samples = [
   {
@@ -200,26 +290,8 @@ const samples = [
     }
   },
   {
-    left: {
-      name: "john",
-      father: {
-        name: "ivan",
-        age: 55,
-        salary: 3000
-      },
-      gender: "male"
-    },
-    right: {
-      father: {
-        name: "ivan",
-        age: 51,
-        gender: "male",
-        father: {
-          name: "raskolnikov",
-          age: 120
-        }
-      }
-    }
+    left: sample2Left,
+    right: sample2Right
   },
   {
     left: arrLeft,
