@@ -4,7 +4,7 @@
         <Button class="btn p-button-secondary" v-on:click="loadSample2" value="Sample">Sample 2</Button>
         <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
         <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
-        <Button class="btn p-button-secondary" v-on:click="clear" icon="pi pi-times">Clear</Button>
+        <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
     </div>
 </template>
 
