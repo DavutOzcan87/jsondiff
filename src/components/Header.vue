@@ -1,7 +1,6 @@
 <template>
     <div class="header">
-        <Button icon="pi pi-bookmark" class="p-button-rounded p-button-secondary" />
-        <span>Header</span>
+        <!-- <Button icon="pi pi-bookmark" class="p-button-rounded p-button-secondary" /> -->
     </div>
 </template>
 
