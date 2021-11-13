@@ -15,7 +15,7 @@ spec:
         app: jsondiff
     spec:
       containers:
-        - image: davutozcan/jsondiff:1.0
+        - image: davutozcan/jsondiff:2.0
           name: jsondiff
 ---
 kind: Service
