@@ -1,10 +1,10 @@
 <template>
     <div class="controlPanel">
-        <button class="btn" v-on:click="loadSample" value="Sample">Sample 1</button>
-        <button class="btn" v-on:click="loadSample2" value="Sample">Sample 2</button>
-        <button class="btn" v-on:click="loadSample3" value="Sample">Sample 3</button>
-        <button class="btn" v-on:click="compare">Compare</button>
-        <button class="btn" v-on:click="clear">Clear</button>
+        <Button class="btn p-button-secondary" v-on:click="loadSample" value="Sample">Sample 1</Button>
+        <Button class="btn p-button-secondary" v-on:click="loadSample2" value="Sample">Sample 2</Button>
+        <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
+        <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
+        <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
     </div>
 </template>
 
@@ -39,10 +39,10 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-width: 250px;
+    flex-grow: 1;
 }
 .btn {
     margin-top: 1em;
-    min-width: 200px;
+    min-width: 150px;
 }
 </style>

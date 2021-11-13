@@ -15,7 +15,7 @@ export default {
             var editor = window.mc.editor.create(document.getElementById(props.editorId), {
                 value: "{}",
                 language: "json",
-                theme: "vs-dark",
+                theme: "vs-light",
             });
             console.log("editorService", editorService);
             editorService.editors[props.editorId] = editor;
@@ -33,7 +33,9 @@ export default {
 .editor {
     width: 40vw;
     /* height: 200px; */
-    flex-grow: 1;
+    flex-grow: 4;
+    align-self: center;
+    background: red;
 }
 
 .myeditor {

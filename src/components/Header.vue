@@ -12,7 +12,8 @@ export default {
 </script>
 <style scoped>
 .header {
-    background: black;
+    background: #24566c;
     /* height: 3em; */
+    min-height: 36pt;
 }
 </style>

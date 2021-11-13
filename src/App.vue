@@ -23,8 +23,10 @@ export default {
 
 <style>
 #app {
-    background-color: #333333;
+    background-color: #d8eaef;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 body {
