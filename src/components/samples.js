@@ -1,3 +1,123 @@
+const arrLeft = [
+  {
+    "id": 6116,
+    "uid": "d2132046-5a15-4165-a640-3370e5ef3dbd",
+    "city": "Rautown",
+    "street_name": "Francesco Gateway",
+    "street_address": "62654 Schinner Shore",
+    "secondary_address": "Apt. 320",
+    "building_number": "40798",
+    "mail_box": "PO Box 1828",
+    "community": "Park Village",
+    "zip_code": "04415",
+    "zip": "61932-0562",
+    "postcode": "49810",
+    "time_zone": "Europe/Moscow",
+    "street_suffix": "Fields",
+    "city_suffix": "mouth",
+    "city_prefix": "South",
+    "state": "Mississippi",
+    "state_abbr": "VA",
+    "country": "Iceland",
+    "country_code": "MP",
+    "latitude": 8.715345322491316,
+    "longitude": 149.3378935957166,
+    "full_address": "Apt. 162 9568 Legros Flat, New Jennineton, WI 79520-8572"
+  },
+  {
+    "id": 5429,
+    "uid": "e76b942f-4431-4bae-ac16-46c61d28feeb",
+    "city": "East Grazyna",
+    "street_name": "Wuckert Divide",
+    "street_address": "1195 Thiel Burgs",
+    "secondary_address": "Apt. 557",
+    "building_number": "850",
+    "mail_box": "PO Box 282",
+    "community": "Willow Acres",
+    "zip_code": "59630-0686",
+    "zip": "69726-6972",
+    "postcode": "49239-5087",
+    "time_zone": "Europe/Warsaw",
+    "street_suffix": "Oval",
+    "city_suffix": "haven",
+    "city_prefix": "Port",
+    "state": "New Jersey",
+    "state_abbr": "TN",
+    "country": "San Marino",
+    "country_code": "SA",
+    "latitude": -2.81421911134062,
+    "longitude": 166.22451274138177,
+    "full_address": "1204 Domonique Island, Lake Terrellstad, OR 25729-7251"
+  },
+  {
+    "id": 8690,
+    "uid": "195d6e49-49a8-4801-939c-dede57f3645d",
+    "city": "Framiland",
+    "street_name": "Borer Viaduct",
+    "street_address": "6104 Kuphal Branch",
+    "secondary_address": "Suite 345",
+    "building_number": "8778",
+    "mail_box": "PO Box 5779",
+    "community": "Royal Square",
+    "zip_code": "89191",
+    "zip": "68617",
+    "postcode": "87973-1485",
+    "time_zone": "Pacific/Midway",
+    "street_suffix": "Shores",
+    "city_suffix": "shire",
+    "city_prefix": "Port",
+    "state": "Texas",
+    "state_abbr": "WV",
+    "country": "Japan",
+    "country_code": "SG",
+    "latitude": -74.88700636382583,
+    "longitude": -13.484380121159631,
+    "full_address": "55840 Gaylord Valleys, North Simonview, IL 29409"
+  }
+];
+const arrRight = [
+  {
+    "id": 1148,
+    "uid": "f0c3a4a8-b7e7-4c3e-a4d4-2fab46c1a0ae",
+    "brand": "Carlsberg",
+    "name": "Double Bastard Ale",
+    "style": "Amber Hybrid Beer",
+    "hop": "Mt. Hood",
+    "yeast": "2124 - Bohemian Lager",
+    "malts": "Special roast",
+    "ibu": "76 IBU",
+    "alcohol": "3.0%",
+    "blg": "10.5°Blg"
+  },
+  {
+    "id": 3794,
+    "uid": "65d89851-b0f2-433e-beb5-cf3269e82e65",
+    "brand": "Hoegaarden",
+    "name": "Bourbon County Stout",
+    "style": "Fruit Beer",
+    "hop": "TriplePearl",
+    "yeast": "1469 - West Yorkshire Ale",
+    "malts": "Wheat mal",
+    "ibu": "49 IBU",
+    "alcohol": "3.3%",
+    "blg": "15.5°Blg"
+  },
+  {
+    "id": 6816,
+    "uid": "906963e4-8b47-43dc-9491-3da7b1429f22",
+    "brand": "Corona Extra",
+    "name": "Bourbon County Stout",
+    "style": "Merican Ale",
+    "hop": "Perle",
+    "yeast": "1450 - Dennys Favorite 50",
+    "malts": "Carapils",
+    "ibu": "91 IBU",
+    "alcohol": "4.1%",
+    "blg": "6.8°Blg"
+  }
+];
+
+
 const samples = [
   {
     left: {
@@ -102,38 +222,12 @@ const samples = [
     }
   },
   {
-    left: {
-      name: "john",
-      children: [
-        {
-          name: "adam",
-          age: 11
-        },
-        {
-          name: "ave",
-          gender: "female"
-        }
-      ]
-    },
-    right: {
-      name: "john",
-      children: [
-        {
-          name: "adam"
-        },
-        {
-          name: "ave",
-          gender: "female",
-          age: 9
-        },
-        {
-          name: "moses",
-          gender: "male"
-        }
-      ]
-    }
+    left: arrLeft,
+    right: arrRight
   }
 ];
+
+
 
 
 export { samples }
