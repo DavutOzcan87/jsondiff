@@ -161,3 +161,21 @@ test("should find when a field value changed", () => {
         ]
     });
 });
+
+
+test("should find when a field value is null", () => {
+    const first = {
+        "age": null
+    }
+    const second = {};
+
+    const result = jsonDiffService.findDiffs(first, second);
+    expect(result).toMatchObject({
+        diff: [
+            {
+                isRemoved: true,
+                startLineNumber: 2, startColumn: 5, endLineNumber: 2, endColumn: 16
+            }
+        ]
+    });
+});

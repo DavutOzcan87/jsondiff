@@ -93,13 +93,13 @@ const parse = function (obj) {
 
 const parseInternal = function (obj, point, key) {
     console.log("parse object called", obj);
-    if (obj === null || obj == undefined) {
-        return EMPTY;
-    }
+    // if (obj === null || obj == undefined) {
+    //     return EMPTY;
+    // }
 
     if (Array.isArray(obj)) {
         return parseArray(obj, point, key);
-    } else if (typeof obj === "object") {
+    } else if (typeof obj === "object" && obj != null && obj != undefined) {
         return parseOnject(obj, point, key);
     } else {
         return parsePrimitive(obj, point, key);
@@ -143,7 +143,7 @@ function parsePrimitive(primitive, point, key) {
 }
 
 const EMPTY = {
-    dimensin: new Dimension(0, 0, 0, 0),
+    dimension: new Dimension(0, 0, 0, 0),
     children: []
 };
 

@@ -150,3 +150,19 @@ test("should set array index as key", () => {
         ]
     });
 });
+
+
+test('should parse object with null value', () => {
+    const sample = {
+        age: null
+    };
+    const parsed = parse(sample);
+    expect(parsed).toMatchObject({
+        //dimension: dim(1, 1, 12, 25),
+        children: [
+            {
+                dimension: dim(2, 5, 2, 16)
+            }
+        ]
+    });
+});
