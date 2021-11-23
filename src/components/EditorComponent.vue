@@ -35,7 +35,6 @@ export default {
     /* height: 200px; */
     flex-grow: 4;
     align-self: center;
-    background: red;
 }
 
 .myeditor {

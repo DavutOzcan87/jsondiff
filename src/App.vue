@@ -1,4 +1,5 @@
 <template>
+    <Toast position="bottom-center" />
     <Header />
     <MainComponent msg="Welcome to Your Vue.js App" />
 </template>
@@ -6,6 +7,7 @@
 <script>
 import MainComponent from "./components/MainComponent.vue";
 import Header from "./components/Header.vue";
+import Toast from "primevue/toast";
 window._ = require("lodash");
 window.mc = require("monaco-editor");
 //window._editor = require('vs/editor/editor.main');
@@ -15,6 +17,7 @@ export default {
     components: {
         MainComponent,
         Header,
+        Toast,
     },
 };
 </script>
