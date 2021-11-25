@@ -11,7 +11,7 @@
 
 <script>
 import { editorService } from "./editorService";
-
+import store from "./store";
 export default {
     name: "ControlPanelComponent",
     methods: {
@@ -32,7 +32,8 @@ export default {
         },
         toast: function () {
             console.log("toast called", this, this.$toast);
-            this.$toast.add({ severity: "success", summary: "Success Message", detail: "Message Content", life: 3000 });
+            //this.$toast.add({ severity: "success", summary: "Success Message", detail: "Message Content", life: 3000 });
+            store.addError("a new error");
         },
     },
 };

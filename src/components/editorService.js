@@ -24,19 +24,20 @@ class EditorService {
         this.rightEditor().setValue(JSON.stringify(samples[sampleIndex].right, undefined, 4));
     }
     compare() {
-        this.clear();
-        let first = JSON.parse(this.leftEditor().getValue());
-        let second = JSON.parse(this.rightEditor().getValue());
-        this.writeFormatted(first, this.leftEditor());
-        this.writeFormatted(second, this.rightEditor());
-        let diffs = jsonDiffService.findDiffs(first, second).diff;
-        console.log("diffs", diffs);
-        let rightDecorations = this._extratRightDecorations(diffs);
-        let leftEditorDecorations = this._extractLeftDecorations(diffs);
-        console.log("right decorations", rightDecorations);
-        console.log("leftDecorations", leftEditorDecorations);
-        this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
-        this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
+        throw "invalid data";
+        // this.clear();
+        // let first = JSON.parse(this.leftEditor().getValue());
+        // let second = JSON.parse(this.rightEditor().getValue());
+        // this.writeFormatted(first, this.leftEditor());
+        // this.writeFormatted(second, this.rightEditor());
+        // let diffs = jsonDiffService.findDiffs(first, second).diff;
+        // console.log("diffs", diffs);
+        // let rightDecorations = this._extratRightDecorations(diffs);
+        // let leftEditorDecorations = this._extractLeftDecorations(diffs);
+        // console.log("right decorations", rightDecorations);
+        // console.log("leftDecorations", leftEditorDecorations);
+        // this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
+        // this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
 
     }
     clear() {

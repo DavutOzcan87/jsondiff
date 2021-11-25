@@ -1,12 +1,14 @@
 <template>
-    <Toast position="bottom-center" />
+    <Toast position="top-right" />
     <Header />
+    <Messages />
     <MainComponent msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
 import MainComponent from "./components/MainComponent.vue";
 import Header from "./components/Header.vue";
+import Messages from "./components/Messages.vue";
 import Toast from "primevue/toast";
 window._ = require("lodash");
 window.mc = require("monaco-editor");
@@ -18,6 +20,19 @@ export default {
         MainComponent,
         Header,
         Toast,
+        Messages,
+    },
+
+    errorCaptured(err, vm, info) {
+        console.log("error captred", err, vm, info);
+        this.$toast.add({
+            severity: "error",
+            summary: "Something went wrong",
+            detail: err,
+            life: 3000,
+            closable: false,
+        });
+        return false;
     },
 };
 </script>
