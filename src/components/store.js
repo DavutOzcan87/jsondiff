@@ -4,33 +4,23 @@ const store = {
   debug: true,
 
   state: reactive({
-    message: 'Hello!',
     messages: {
-      errors: ["error 1", "error 2"],
+      errors: [],
+      persistentInfo: "test"
     }
   }),
-
-  setMessageAction(newValue) {
-    if (this.debug) {
-      console.log('setMessageAction triggered with', newValue)
-    }
-
-    this.state.message = newValue
-  },
-
-  clearMessageAction() {
-    if (this.debug) {
-      console.log('clearMessageAction triggered')
-    }
-
-    this.state.message = ''
-  },
 
   addError(err) {
     this.state.messages.errors.push(err);
   },
   clearErrors() {
     this.state.messages.errors = [];
+  },
+
+  onNoDiffFound() {
+    this.state.messages.persistentInfo = "Two documents are identicall.";
+    //this.state.messages.errors.push("errr1");
+    console.log("onNoDiffFound", "state", this.state);
   }
 }
 export default store;

@@ -1,6 +1,7 @@
 <template>
-    <Message severity="success" :closable="false" :life="3000" :sticky="false">Order Submitted</Message>
-    <Message v-for="msg of errors" :severity="warn" :life="3000" :key="msg" :sticky="false">{{ msg }} </Message>
+    <Message severity="success" :closable="false" :sticky="true">{{ info }}</Message>
+    <span v-text="info"></span>
+    <Message v-for="msg of errors" :severity="info" :life="3000" :key="msg" :sticky="false">{{ msg }} </Message>
 </template>
 <script>
 import store from "./store";
@@ -12,11 +13,20 @@ export default {
     },
     data() {
         return {
-            errors: store.state.messages.errors,
+            //errors: store.state.messages.errors,
+            info: store.state.messages.persistentInfo,
         };
     },
+
+    beforeUpdate() {
+        console.log("before update", this.errors, this.info);
+    },
+
     components: {
         Message,
     },
 };
 </script>
+    
+<style>
+</style>

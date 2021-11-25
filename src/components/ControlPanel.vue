@@ -26,6 +26,9 @@ export default {
         },
         compare: function () {
             editorService.compare();
+            if (editorService.diffCount == 0) {
+                store.onNoDiffFound();
+            }
         },
         clear: function () {
             editorService.clear();

@@ -9,8 +9,14 @@ class EditorService {
         this.editors = {};
         this.leftIds = undefined;
         this.rightIds = undefined;
+        this._diffs = [];
 
     }
+
+    get diffCount() {
+        return this._diffs.length;
+    }
+
     leftEditor() {
         return this.editors["editor-left"];
     }
@@ -24,20 +30,21 @@ class EditorService {
         this.rightEditor().setValue(JSON.stringify(samples[sampleIndex].right, undefined, 4));
     }
     compare() {
-        throw "invalid data";
-        // this.clear();
-        // let first = JSON.parse(this.leftEditor().getValue());
-        // let second = JSON.parse(this.rightEditor().getValue());
-        // this.writeFormatted(first, this.leftEditor());
-        // this.writeFormatted(second, this.rightEditor());
-        // let diffs = jsonDiffService.findDiffs(first, second).diff;
-        // console.log("diffs", diffs);
-        // let rightDecorations = this._extratRightDecorations(diffs);
-        // let leftEditorDecorations = this._extractLeftDecorations(diffs);
-        // console.log("right decorations", rightDecorations);
-        // console.log("leftDecorations", leftEditorDecorations);
-        // this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
-        // this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
+
+        this.clear();
+        let first = JSON.parse(this.leftEditor().getValue());
+        let second = JSON.parse(this.rightEditor().getValue());
+        this.writeFormatted(first, this.leftEditor());
+        this.writeFormatted(second, this.rightEditor());
+        let diffs = jsonDiffService.findDiffs(first, second).diff;
+        this._diffs = diffs;
+        console.log("diffs", diffs);
+        let rightDecorations = this._extratRightDecorations(diffs);
+        let leftEditorDecorations = this._extractLeftDecorations(diffs);
+        console.log("right decorations", rightDecorations);
+        console.log("leftDecorations", leftEditorDecorations);
+        this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
+        this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
 
     }
     clear() {
