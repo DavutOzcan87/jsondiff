@@ -37,6 +37,7 @@ export default {
             console.log("toast called", this, this.$toast);
             //this.$toast.add({ severity: "success", summary: "Success Message", detail: "Message Content", life: 3000 });
             store.addError("a new error");
+            store.onNoDiffFound();
         },
     },
 };

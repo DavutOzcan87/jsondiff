@@ -5,8 +5,13 @@ const store = {
 
   state: reactive({
     messages: {
-      errors: [],
-      persistentInfo: "test"
+      errors: []
+    }
+  }),
+
+  infoMessage: reactive({
+    message: {
+      value: ""
     }
   }),
 
@@ -18,9 +23,9 @@ const store = {
   },
 
   onNoDiffFound() {
-    this.state.messages.persistentInfo = "Two documents are identicall.";
-    //this.state.messages.errors.push("errr1");
-    console.log("onNoDiffFound", "state", this.state);
+    this.infoMessage.message.value = "Two documents are identical";
+    this.state.messages.errors.push("errr1");
+    console.log("onNoDiffFound", "state", this.state, this.infoMessage.message);
   }
 }
 export default store;

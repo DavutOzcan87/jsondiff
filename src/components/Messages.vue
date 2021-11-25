@@ -1,7 +1,7 @@
 <template>
-    <Message severity="success" :closable="false" :sticky="true">{{ info }}</Message>
-    <span v-text="info"></span>
-    <Message v-for="msg of errors" :severity="info" :life="3000" :key="msg" :sticky="false">{{ msg }} </Message>
+    <Message severity="success" :closable="false" :sticky="true">{{ info.value }}</Message>
+    <span> {{ info.value }} </span>
+    <Message v-for="msg of errors" :severity="info" :life="3000" :key="msg" :sticky="false">{{ info }} </Message>
 </template>
 <script>
 import store from "./store";
@@ -13,8 +13,8 @@ export default {
     },
     data() {
         return {
-            //errors: store.state.messages.errors,
-            info: store.state.messages.persistentInfo,
+            errors: store.state.messages.errors,
+            info: store.infoMessage.message,
         };
     },
 
