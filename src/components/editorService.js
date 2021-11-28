@@ -1,8 +1,10 @@
 import { Range } from "monaco-editor";
 import { jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
-
+import { JsonParseException } from "./exceptions";
+import store from "./store";
 var decorations = [{ range: new Range(3, 5, 3, 14), options: { inlineClassName: "newLine" } }];
+
 
 class EditorService {
     constructor() {
@@ -32,8 +34,8 @@ class EditorService {
     compare() {
 
         this.clear();
-        let first = JSON.parse(this.leftEditor().getValue());
-        let second = JSON.parse(this.rightEditor().getValue());
+        let first = this.parseLeftDocument();
+        let second = this.parseRightDocument();
         this.writeFormatted(first, this.leftEditor());
         this.writeFormatted(second, this.rightEditor());
         let diffs = jsonDiffService.findDiffs(first, second).diff;
@@ -45,6 +47,27 @@ class EditorService {
         console.log("leftDecorations", leftEditorDecorations);
         this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
         this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
+
+
+
+    }
+
+    parseRightDocument() {
+        try {
+            return JSON.parse(this.rightEditor().getValue());
+        } catch (e) {
+            throw new JsonParseException(e, "Cannot parse right document");
+        }
+
+    }
+
+    parseLeftDocument() {
+        try {
+            return JSON.parse(this.leftEditor().getValue());
+
+        } catch (e) {
+            throw new JsonParseException(e, "Cannot parse left document");
+        }
 
     }
     clear() {

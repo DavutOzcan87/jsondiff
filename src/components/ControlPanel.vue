@@ -25,6 +25,7 @@ export default {
             editorService.loadSampleData(2);
         },
         compare: function () {
+            store.clear();
             editorService.compare();
             if (editorService.diffCount == 0) {
                 store.onNoDiffFound();
@@ -37,7 +38,7 @@ export default {
             console.log("toast called", this, this.$toast);
             //this.$toast.add({ severity: "success", summary: "Success Message", detail: "Message Content", life: 3000 });
             store.addError("a new error");
-            store.onNoDiffFound();
+            store.info.text = "";
         },
     },
 };

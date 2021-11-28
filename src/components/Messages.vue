@@ -1,6 +1,6 @@
 <template>
     <Message v-if="info.text" severity="success" :closable="false" :sticky="true">{{ info.text }}</Message>
-    <Message v-for="msg of errors" :severity="info" :life="3000" :key="msg" :sticky="false">{{ info }} </Message>
+    <Message v-for="msg of error.texts" :severity="warn" :life="3000" :key="msg" :sticky="false">{{ msg }} </Message>
 </template>
 <script>
 import store from "./store";
@@ -12,13 +12,13 @@ export default {
     },
     data() {
         return {
-            errors: store.state.messages.errors,
+            error: store.error,
             info: store.info,
         };
     },
 
     beforeUpdate() {
-        console.log("before update", this.errors, this.info);
+        console.log("before update", this.error, this.info);
     },
 
     components: {
