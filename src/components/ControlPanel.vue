@@ -5,7 +5,6 @@
         <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
         <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
         <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
-        <Button class="btn p-button-secondary" v-on:click="toast">Toast</Button>
     </div>
 </template>
 
@@ -33,12 +32,7 @@ export default {
         },
         clear: function () {
             editorService.clear();
-        },
-        toast: function () {
-            console.log("toast called", this, this.$toast);
-            //this.$toast.add({ severity: "success", summary: "Success Message", detail: "Message Content", life: 3000 });
-            store.addError("a new error");
-            store.info.text = "";
+            store.clear();
         },
     },
 };

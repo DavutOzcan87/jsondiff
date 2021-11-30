@@ -34,11 +34,12 @@ export default {
     width: 40vw;
     /* height: 200px; */
     flex-grow: 4;
-    align-self: center;
+    align-self: stretch;
 }
 
 .myeditor {
+    margin-top: 10px;
     width: 100%;
-    height: 80vh;
+    height: 80%;
 }
 </style>>
