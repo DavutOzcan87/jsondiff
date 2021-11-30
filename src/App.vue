@@ -27,13 +27,6 @@ export default {
 
     errorCaptured(err, vm, info) {
         console.log("error captred", err, vm, info);
-        // this.$toast.add({
-        //     severity: "error",
-        //     summary: "Something went wrong",
-        //     detail: err,
-        //     life: 3000,
-        //     closable: false,
-        // });
         if (err.msg != undefined) {
             store.onError(err.msg);
         }
