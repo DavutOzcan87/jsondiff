@@ -52,13 +52,14 @@ export default {
     flex-direction: column;
 }
 
-#app .p-message-info {
-    background: #ffffffff;
+#app .p-message-warn {
+    background: rgba(228, 213, 170, 0.5);
     border: none;
 }
 
 #app .p-message-success {
     border: none;
+    background: rgba(167, 200, 153, 0.5);
 }
 
 body {
@@ -75,10 +76,5 @@ body {
 
 .valueChanged {
     background: rgba(197, 197, 26, 0.432) !important;
-}
-
-.p-messages {
-    background: red;
-    background-color: rebeccapurple;
 }
 </style>

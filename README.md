@@ -34,3 +34,7 @@ https://www.color-hex.com/color-palette/116414
 #4c4fcb	
 #bebdb8	
 #d3d3d3
+
+### second palatte
+https://www.color-hex.com/color-palette/116938
+
