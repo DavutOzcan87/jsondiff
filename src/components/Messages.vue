@@ -1,6 +1,8 @@
 <template>
     <Message v-if="info.text" severity="success" :closable="false" :sticky="true">{{ info.text }}</Message>
-    <Message v-for="msg of error.texts" :severity="warn" :life="3000" :key="msg" :sticky="false">{{ msg }} </Message>
+    <Message v-for="err of error.objs" :severity="warn" :life="3000" :key="err.key" :sticky="false"
+        >{{ err.text }}
+    </Message>
 </template>
 <script>
 import store from "./store";

@@ -10,28 +10,31 @@ const store = {
   }),
 
   error: reactive({
-    texts: []
+    objs: []
   }),
 
   addError(err) {
-    this.error.texts.push(err);
+    this.error.objs.push({
+      text: err,
+      key: Math.random()
+    });
   },
   clearErrors() {
-    this.error.texts = [];
+    this.error.objs = [];
   },
 
   onNoDiffFound() {
     this.info.text = "Two documents are identical";
-    this.error.texts = [];
+    this.clearErrors();
   },
   clear() {
     this.info.text = "";
-    this.error.texts = [];
+    this.clearErrors();
   },
 
   onError(msg) {
     this.info.text = "";
-    this.error.texts.push(msg);
+    this.addError(msg);
     console.log("errros ->", this.error);
   }
 }
