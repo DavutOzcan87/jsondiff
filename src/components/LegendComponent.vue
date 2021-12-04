@@ -1,6 +1,5 @@
 <template>
     <div class="legendcontainer">
-        <span>Legends</span>
         <table>
             <tr>
                 <td><div class="rectangle missingLine"></div></td>
@@ -12,7 +11,7 @@
             </tr>
             <tr>
                 <td><div class="rectangle valueChanged"></div></td>
-                <td><span>value changed</span></td>
+                <td><span>value change</span></td>
             </tr>
         </table>
     </div>
@@ -27,10 +26,10 @@ export default {
 
 <style scoped>
 .legendcontainer {
-    align-self: center;
+    font-size: small;
 }
 .rectangle {
-    height: 20px;
-    width: 20px;
+    height: 1em;
+    width: 1em;
 }
 </style>

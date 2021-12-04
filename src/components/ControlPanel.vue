@@ -1,11 +1,15 @@
 <template>
     <div class="controlPanel">
-        <Button class="btn p-button-secondary" v-on:click="loadSample" value="Sample">Sample 1</Button>
-        <Button class="btn p-button-secondary" v-on:click="loadSample2" value="Sample">Sample 2</Button>
-        <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
-        <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
-        <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
-        <legend-component />
+        <div class="top-area">
+            <Button class="btn p-button-secondary" v-on:click="loadSample" value="Sample">Sample 1</Button>
+            <Button class="btn p-button-secondary" v-on:click="loadSample2" value="Sample">Sample 2</Button>
+            <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
+            <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
+            <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
+        </div>
+        <div class="bottom-area">
+            <legend-component />
+        </div>
     </div>
 </template>
 
@@ -54,5 +58,16 @@ export default {
 .btn {
     margin-top: 1em;
     min-width: 150px;
+}
+
+.top-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.bottom-area {
 }
 </style>
