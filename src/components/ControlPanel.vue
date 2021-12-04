@@ -5,13 +5,16 @@
         <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
         <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
         <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
+        <legend-component />
     </div>
 </template>
 
 <script>
 import { editorService } from "./editorService";
 import store from "./store";
+import LegendComponent from "./LegendComponent.vue";
 export default {
+    components: { LegendComponent },
     name: "ControlPanelComponent",
     methods: {
         loadSample: function () {
@@ -45,6 +48,8 @@ export default {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    margin-top: 10px;
+    height: 80%;
 }
 .btn {
     margin-top: 1em;
