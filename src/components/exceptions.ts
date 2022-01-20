@@ -1,5 +1,7 @@
 class JsonParseException {
-    constructor(error, msg) {
+    error: string;
+    msg: string;
+    constructor(error: string, msg: string) {
         this.error = error;
         this.msg = msg;
     }
