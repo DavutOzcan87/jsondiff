@@ -1,7 +1,7 @@
-import { parse } from "../../src/components/jsonnode";
+import { Dimension, parse } from '../../src/components/jsonnode'
 
 function dim(startLineNumber, startColumn, endLineNumber, endColumn) {
-    return { startLineNumber, startColumn, endLineNumber, endColumn };
+    return { startLineNumber, startColumn, endLineNumber, endColumn } as Dimension;
 }
 
 test("should parse flat object", () => {
@@ -75,6 +75,16 @@ test("should parse flat array with primitives", () => {
                 dimension: dim(5, 5, 5, 9)
             }
         ]
+    });
+});
+
+
+test("should parse flat array with primitives case 2", () => {
+    const sample = [1];
+    const parsed = parse(sample);
+    expect(parsed).toMatchObject({
+        dimension: dim(1, 1, 3, 6),
+        type: "array",
     });
 });
 

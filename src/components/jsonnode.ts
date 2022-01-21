@@ -1,12 +1,23 @@
-class JsonArray {
-    constructor(key) {
+
+
+export interface JsonElement {
+    children: JsonElement[];
+    dimension: Dimension;
+    type: string;
+    key: string | number;
+}
+
+
+export class JsonArray implements JsonElement {
+    children: JsonElement[] = [];
+    dimension = new Dimension(1, 1, 0, 0);
+    type = "array";
+    key: string | number;
+    constructor(key: string | number) {
         this.key = key;
-        this.children = [];
-        this.dimension = new Dimension(1, 1, 0, 0);
-        this.type = "array";
     }
 
-    addChildren(parsed) {
+    addChildren(parsed: JsonElement) {
         this.children.push(parsed);
         this.dimension.expand(parsed.dimension);
     }
@@ -20,15 +31,16 @@ class JsonArray {
     }
 }
 
-class JsonObject {
-    constructor(key) {
+export class JsonObject implements JsonElement {
+    children: JsonElement[] = [];
+    dimension = new Dimension(1, 1, 0, 0);
+    type = "object";
+    key: string | number = "";
+    constructor(key: string | number) {
         this.key = key;
-        this.children = [];
-        this.dimension = new Dimension(1, 1, 0, 0);
-        this.type = "object";
     }
 
-    addChildren(parsed) {
+    addChildren(parsed: JsonElement) {
         this.children.push(parsed);
         this.dimension.expand(parsed.dimension);
     }
@@ -41,17 +53,22 @@ class JsonObject {
     }
 }
 
-class JsonPrimitive {
-    constructor(key, value) {
+export class JsonPrimitive implements JsonElement {
+    dimension: Dimension;
+    key: string | number;
+    value: any;
+    children = [];
+    type = "primitive";
+    constructor(key: string | number, value: any) {
         this.key = key;
         this.value = value;
         let length = JSON.stringify(value).length;
-        if (key.length > 0) {
-            length += key.length + 4;
+        let strValue = this.key as String;
+        if (strValue != undefined && strValue.length > 0) {
+            length += strValue.length + 4;
         }
+
         this.dimension = new Dimension(1, 1, 1, length + 1);
-        this.children = [];
-        this.type = "primitive";
     }
 
     isPrimitive() {
@@ -59,39 +76,41 @@ class JsonPrimitive {
     }
 }
 
-class Dimension {
-    constructor(startLineNumber, startColumn, endLineNumber, endColumn) {
+export class Dimension {
+    startLineNumber: number;
+    startColumn: number;
+    endLineNumber: number;
+    endColumn: number;
+    constructor(startLineNumber: number, startColumn: number, endLineNumber: number, endColumn: number) {
         this.startLineNumber = startLineNumber;
         this.startColumn = startColumn;
         this.endLineNumber = endLineNumber;
         this.endColumn = endColumn;
     }
 
-    shift(point) {
+    shift(point: Point) {
         this.startLineNumber += point.line;
         this.endLineNumber += point.line;
         this.startColumn += point.column;
         this.endColumn += point.column;
     }
 
-    expand(dimension) {
+    expand(dimension: Dimension) {
         this.endLineNumber = Math.max(this.endLineNumber, dimension.endLineNumber);
         this.endColumn = Math.max(this.endColumn, dimension.endColumn);
     }
 }
 
-class Point {
-    constructor(line, column) {
-        this.line = line;
-        this.column = column;
+export class Point {
+    constructor(public line: number, public column: number) {
     }
 }
 
-const parse = function (obj) {
+export function parse(obj: any) {
     return parseInternal(obj, new Point(0, 0), "");
 };
 
-const parseInternal = function (obj, point, key) {
+const parseInternal = function (obj: any, point: Point, key: string | number) {
     console.log("parse object called", obj);
     // if (obj === null || obj == undefined) {
     //     return EMPTY;
@@ -106,7 +125,7 @@ const parseInternal = function (obj, point, key) {
     }
 };
 
-function parseOnject(obj, point, key) {
+function parseOnject(obj: object, point: Point, key: string | number) {
     let result = new JsonObject(key);
     result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
@@ -120,7 +139,7 @@ function parseOnject(obj, point, key) {
     return result;
 }
 
-function parseArray(obj, point, key) {
+function parseArray(obj: any[], point: Point, key: string | number) {
     let result = new JsonArray(key);
     result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
@@ -136,7 +155,7 @@ function parseArray(obj, point, key) {
     return result;
 }
 
-function parsePrimitive(primitive, point, key) {
+function parsePrimitive(primitive: any, point: Point, key: string | number) {
     let result = new JsonPrimitive(key, primitive);
     result.dimension.shift(point);
     return result;
@@ -149,4 +168,3 @@ const EMPTY = {
 
 const TAB_SIZE = 4;
 
-export { parse };
