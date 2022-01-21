@@ -1,6 +1,6 @@
 #/bin/bash
 
-version=4
+version=5
 
 docker tag jsondiff davutozcan/jsondiff:"$version"
 docker push davutozcan/jsondiff:"$version"
