@@ -63,7 +63,7 @@ export class JsonPrimitive implements JsonElement {
         this.key = key;
         this.value = value;
         let length = JSON.stringify(value).length;
-        let strValue = this.key as String;
+        const strValue = this.key as string;
         if (strValue != undefined && strValue.length > 0) {
             length += strValue.length + 4;
         }
@@ -125,13 +125,13 @@ const parseInternal = function (obj: any, point: Point, key: string | number) {
     }
 };
 
-function parseOnject(obj: object, point: Point, key: string | number) {
-    let result = new JsonObject(key);
+function parseOnject(obj: any, point: Point, key: string | number) {
+    const result = new JsonObject(key);
     result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
-    for (let [key, value] of Object.entries(obj)) {
+    for (const [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
-        let child = parseInternal(value, currentPoint, key);
+        const child = parseInternal(value, currentPoint, key);
         result.addChildren(child);
         currentPoint.line = child.dimension.endLineNumber - 1;
     }
@@ -140,13 +140,13 @@ function parseOnject(obj: object, point: Point, key: string | number) {
 }
 
 function parseArray(obj: any[], point: Point, key: string | number) {
-    let result = new JsonArray(key);
+    const result = new JsonArray(key);
     result.dimension.shift(point);
     let currentPoint = new Point(point.line, point.column + TAB_SIZE);
     let index = 0;
-    for (let [key, value] of Object.entries(obj)) {
+    for (const [key, value] of Object.entries(obj)) {
         currentPoint = new Point(currentPoint.line + 1, currentPoint.column);
-        let child = parseInternal(value, currentPoint, index);
+        const child = parseInternal(value, currentPoint, index);
         index += 1;
         result.addChildren(child);
         currentPoint.line = child.dimension.endLineNumber - 1;
@@ -156,7 +156,7 @@ function parseArray(obj: any[], point: Point, key: string | number) {
 }
 
 function parsePrimitive(primitive: any, point: Point, key: string | number) {
-    let result = new JsonPrimitive(key, primitive);
+    const result = new JsonPrimitive(key, primitive);
     result.dimension.shift(point);
     return result;
 }
