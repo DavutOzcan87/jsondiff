@@ -2,11 +2,12 @@ import { Range } from "monaco-editor";
 import { jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
 import { JsonParseException } from "./exceptions";
-import store from "./store";
-var decorations = [{ range: new Range(3, 5, 3, 14), options: { inlineClassName: "newLine" } }];
-
 
 class EditorService {
+    editors: any = {};
+    leftIds = undefined;
+    rightIds = undefined;
+    _diffs = [];
     constructor() {
         this.editors = {};
         this.leftIds = undefined;
@@ -19,7 +20,7 @@ class EditorService {
         return this._diffs.length;
     }
 
-    leftEditor() {
+    leftEditor(): any {
         return this.editors["editor-left"];
     }
 
@@ -27,22 +28,22 @@ class EditorService {
         return this.editors["editor-right"];
     }
 
-    loadSampleData(sampleIndex) {
+    loadSampleData(sampleIndex: any) {
         this.leftEditor().setValue(JSON.stringify(samples[sampleIndex].left, undefined, 4));
         this.rightEditor().setValue(JSON.stringify(samples[sampleIndex].right, undefined, 4));
     }
     compare() {
 
         this.clear();
-        let first = this.parseLeftDocument();
-        let second = this.parseRightDocument();
+        const first = this.parseLeftDocument();
+        const second = this.parseRightDocument();
         this.writeFormatted(first, this.leftEditor());
         this.writeFormatted(second, this.rightEditor());
-        let diffs = jsonDiffService.findDiffs(first, second).diff;
+        const diffs = jsonDiffService.findDiffs(first, second).diff;
         this._diffs = diffs;
         console.log("diffs", diffs);
-        let rightDecorations = this._extratRightDecorations(diffs);
-        let leftEditorDecorations = this._extractLeftDecorations(diffs);
+        const rightDecorations = this._extratRightDecorations(diffs);
+        const leftEditorDecorations = this._extractLeftDecorations(diffs);
         console.log("right decorations", rightDecorations);
         console.log("leftDecorations", leftEditorDecorations);
         this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
@@ -80,14 +81,14 @@ class EditorService {
         }
     }
 
-    writeFormatted(obj, editor) {
+    writeFormatted(obj: any, editor: any) {
         editor.setValue(JSON.stringify(obj, undefined, 4));
     }
 
-    _extratRightDecorations(diffs) {
+    _extratRightDecorations(diffs: any) {
         return diffs
-            .filter(o => o.isAdd === true || o.isValueChanged === true)
-            .map(o => {
+            .filter((o: any) => o.isAdd === true || o.isValueChanged === true)
+            .map((o: any) => {
                 return {
                     range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn),
                     options: { inlineClassName: o.isValueChanged === true ? "valueChanged" : "newLine" }
@@ -95,10 +96,10 @@ class EditorService {
             });
     }
 
-    _extractLeftDecorations(diffs) {
+    _extractLeftDecorations(diffs: any) {
         return diffs
-            .filter(o => o.isRemoved === true)
-            .map(o => {
+            .filter((o: any) => o.isRemoved === true)
+            .map((o: any) => {
                 return {
                     range: new Range(o.startLineNumber, o.startColumn, o.endLineNumber, o.endColumn),
                     options: { inlineClassName: "missingLine" }
