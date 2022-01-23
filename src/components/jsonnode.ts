@@ -5,6 +5,7 @@ export interface JsonElement {
     dimension: Dimension;
     type: string;
     key: string | number;
+    isPrimitive(): boolean;
 }
 
 

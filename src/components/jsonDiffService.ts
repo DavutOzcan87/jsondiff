@@ -1,13 +1,21 @@
-import { parse } from "./jsonnode";
+import { JsonElement, JsonPrimitive, parse } from "./jsonnode";
 import { ranceConverterService } from "./rangeConverterService";
-
+class Diff {
+    isAdd = false;
+    isRemoved = false;
+    isValueChanged = false;
+    startLineNumber = 0;
+    startColumn = 0;
+    endLineNumber = 0;
+    endColumn = 0;
+}
 class JsonDiffService {
-    findDiffs(first, second) {
+    findDiffs(first: any, second: any) {
         return this.diffsUsingTree(first, second);
     }
 
-    toRange(children) {
-        let diffs = ranceConverterService.convert(children);
+    toRange(children: any) {
+        const diffs = ranceConverterService.convert(children);
         for (let index = 0; index < children.length; index++) {
             diffs[index].isAdd = children[index].isAdd;
             diffs[index].isRemoved = children[index].isRemoved;
@@ -16,31 +24,31 @@ class JsonDiffService {
         return diffs;
     }
 
-    diffsUsingTree(first, second) {
+    diffsUsingTree(first: any, second: any) {
         console.log("diff using tree called");
         const left = parse(first);
         const right = parse(second);
         console.log("left", left);
         console.log("right", right);
-        let diff = this.getDiffOfNodes(left, right);
+        const diff = this.getDiffOfNodes(left, right);
         return {
             diff: diff
         };
     }
 
-    getDiffOfNodes(left, right) {
+    getDiffOfNodes(left: JsonElement, right: JsonElement): Diff[] {
         if (left.isPrimitive() === false && right.isPrimitive() === false) {
             return this.getDiffOfComposite(left, right);
         } else {
-            return this.getDiffOfPrimitive(left, right);
+            return this.getDiffOfPrimitive(left as JsonPrimitive, right as JsonPrimitive);
         }
     }
 
-    getDiffOfComposite(left, right) {
-        let leftItems = left.children.reduce((prev, current) => prev.set(current.key, current), new Map());
-        let rightItems = right.children.reduce((prev, current) => prev.set(current.key, current), new Map());
-        let result = [];
-        for (let [key, value] of leftItems.entries()) {
+    getDiffOfComposite(left: JsonElement, right: JsonElement): Diff[] {
+        const leftItems = left.children.reduce((prev, current) => prev.set(current.key, current), new Map());
+        const rightItems = right.children.reduce((prev, current) => prev.set(current.key, current), new Map());
+        let result: Diff[] = [];
+        for (const [key, value] of leftItems.entries()) {
             if (rightItems.has(key)) {
                 result = result.concat(this.getDiffOfNodes(value, rightItems.get(key)));
             } else {
@@ -48,7 +56,7 @@ class JsonDiffService {
             }
         }
 
-        for (let [key, value] of rightItems.entries()) {
+        for (const [key, value] of rightItems.entries()) {
             if (!leftItems.has(key)) {
                 result.push(this.added(value));
             }
@@ -56,35 +64,36 @@ class JsonDiffService {
         return result;
     }
 
-    added(node) {
+    added(node: JsonElement): Diff {
         return {
             isAdd: true,
             startLineNumber: node.dimension.startLineNumber,
             startColumn: node.dimension.startColumn,
             endLineNumber: node.dimension.endLineNumber,
             endColumn: node.dimension.endColumn
-        };
+        } as Diff;
     }
 
-    removed(node) {
+    removed(node: JsonElement): Diff {
         return {
             isRemoved: true,
             startLineNumber: node.dimension.startLineNumber,
             startColumn: node.dimension.startColumn,
             endLineNumber: node.dimension.endLineNumber,
             endColumn: node.dimension.endColumn
-        };
+        } as Diff;
     }
 
-    getDiffOfPrimitive(left, right) {
+    getDiffOfPrimitive(left: JsonPrimitive, right: JsonPrimitive): Diff[] {
         if (left.value !== right.value) {
-            return {
+            const diff = {
                 isValueChanged: true,
                 startLineNumber: right.dimension.startLineNumber,
                 startColumn: right.dimension.startColumn,
                 endLineNumber: right.dimension.endLineNumber,
                 endColumn: right.dimension.endColumn
-            };
+            } as Diff;
+            return [diff];
         } else return [];
     }
 }
