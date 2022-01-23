@@ -2,6 +2,16 @@ import { Range } from "monaco-editor";
 import { jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
 import { editor } from "monaco-editor";
+import { JsonParseException } from "./exceptions";
+
+
+class State {
+    first: any;
+    second: any;
+    diffs: any;
+};
+
+const state = new State();
 
 class EditorService {
     editors: {
@@ -10,17 +20,15 @@ class EditorService {
     };
     leftIds: string[];
     rightIds: string[];
-    _diffs = [];
     constructor() {
         this.editors = {};
         this.leftIds = [];
         this.rightIds = [];
-        this._diffs = [];
 
     }
 
     get diffCount() {
-        return this._diffs.length;
+        return state.diffs.length;
     }
 
     leftEditor(): editor.IStandaloneCodeEditor {
@@ -38,15 +46,14 @@ class EditorService {
     compare() {
 
         this.clear();
-        const first = this.parseLeftDocument();
-        const second = this.parseRightDocument();
-        this.writeFormatted(first, this.leftEditor());
-        this.writeFormatted(second, this.rightEditor());
-        const diffs = jsonDiffService.findDiffs(first, second).diff;
-        this._diffs = diffs;
-        console.log("diffs", diffs);
-        const rightDecorations = this._extratRightDecorations(diffs);
-        const leftEditorDecorations = this._extractLeftDecorations(diffs);
+        state.first = this.parseLeftDocument();
+        state.second = this.parseRightDocument();
+        this.writeFormatted(state.first, this.leftEditor());
+        this.writeFormatted(state.second, this.rightEditor());
+        state.diffs = jsonDiffService.findDiffs(state.first, state.second).diff;
+        console.log("diffs", state.diffs);
+        const rightDecorations = this._extratRightDecorations(state.diffs);
+        const leftEditorDecorations = this._extractLeftDecorations(state.diffs);
         console.log("right decorations", rightDecorations);
         console.log("leftDecorations", leftEditorDecorations);
         this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
