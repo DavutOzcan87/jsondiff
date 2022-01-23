@@ -18,16 +18,6 @@ class JsonDiffService {
         return this.diffsUsingTree(first, second);
     }
 
-    toRange(children: any) {
-        const diffs = ranceConverterService.convert(children);
-        for (let index = 0; index < children.length; index++) {
-            diffs[index].isAdd = children[index].isAdd;
-            diffs[index].isRemoved = children[index].isRemoved;
-            diffs[index].isValueChanged = children[index].isValueChanged;
-        }
-        return diffs;
-    }
-
     diffsUsingTree(first: any, second: any): DiffResult {
         console.log("diff using tree called");
         const left = parse(first);
