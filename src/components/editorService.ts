@@ -1,5 +1,5 @@
 import { Range } from "monaco-editor";
-import { jsonDiffService } from "./jsonDiffService";
+import { Diff, jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
 import { editor } from "monaco-editor";
 import { JsonParseException } from "./exceptions";
@@ -8,7 +8,7 @@ import { JsonParseException } from "./exceptions";
 class State {
     first: any;
     second: any;
-    diffs: any;
+    diffs: Diff[] = [];
 };
 
 const state = new State();

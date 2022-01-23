@@ -1,6 +1,6 @@
 import { JsonElement, JsonPrimitive, parse } from "./jsonnode";
 import { ranceConverterService } from "./rangeConverterService";
-class Diff {
+export class Diff {
     isAdd = false;
     isRemoved = false;
     isValueChanged = false;
@@ -8,9 +8,13 @@ class Diff {
     startColumn = 0;
     endLineNumber = 0;
     endColumn = 0;
+};
+
+export class DiffResult {
+    diff: Diff[] = [];
 }
 class JsonDiffService {
-    findDiffs(first: any, second: any) {
+    findDiffs(first: any, second: any): DiffResult {
         return this.diffsUsingTree(first, second);
     }
 
@@ -24,7 +28,7 @@ class JsonDiffService {
         return diffs;
     }
 
-    diffsUsingTree(first: any, second: any) {
+    diffsUsingTree(first: any, second: any): DiffResult {
         console.log("diff using tree called");
         const left = parse(first);
         const right = parse(second);
