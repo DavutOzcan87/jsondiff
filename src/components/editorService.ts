@@ -1,17 +1,20 @@
 import { Range } from "monaco-editor";
 import { jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
-import { JsonParseException } from "./exceptions";
+import { editor } from "monaco-editor";
 
 class EditorService {
-    editors: any = {};
-    leftIds = undefined;
-    rightIds = undefined;
+    editors: {
+        'editor-left'?: any,
+        'editor-right'?: any
+    };
+    leftIds: string[];
+    rightIds: string[];
     _diffs = [];
     constructor() {
         this.editors = {};
-        this.leftIds = undefined;
-        this.rightIds = undefined;
+        this.leftIds = [];
+        this.rightIds = [];
         this._diffs = [];
 
     }
@@ -20,11 +23,11 @@ class EditorService {
         return this._diffs.length;
     }
 
-    leftEditor(): any {
+    leftEditor(): editor.IStandaloneCodeEditor {
         return this.editors["editor-left"];
     }
 
-    rightEditor() {
+    rightEditor(): editor.IStandaloneCodeEditor {
         return this.editors["editor-right"];
     }
 
