@@ -6,6 +6,7 @@
             <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
             <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
             <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
+            <Button class="btn p-button-secondary" v-on:click="showDiff">Only diff</Button>
         </div>
         <div class="bottom-area">
             <legend-component />
@@ -40,6 +41,9 @@ export default {
         clear: function () {
             editorService.clear();
             store.clear();
+        },
+        showDiff() {
+            editorService.showDiff();
         },
     },
 };

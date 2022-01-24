@@ -3,7 +3,7 @@ import { Diff, jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
 import { editor } from "monaco-editor";
 import { JsonParseException } from "./exceptions";
-import { JsonElement } from "./jsonnode";
+import { JsonArray, JsonElement, JsonObject, JsonPrimitive } from "./jsonnode";
 
 
 class State {
@@ -53,7 +53,11 @@ class EditorService {
         state.second = this.parseRightDocument();
         this.writeFormatted(state.first, this.leftEditor());
         this.writeFormatted(state.second, this.rightEditor());
-        state.diffs = jsonDiffService.findDiffs(state.first, state.second).diff;
+        const diffResult = jsonDiffService.findDiffs(state.first, state.second);
+        state.diffs = diffResult.diff;
+        state.parsedFirst = diffResult.left;
+        state.parsedSecond = diffResult.right;
+
         console.log("diffs", state.diffs);
         const rightDecorations = this._extratRightDecorations(state.diffs);
         const leftEditorDecorations = this._extractLeftDecorations(state.diffs);
@@ -118,6 +122,42 @@ class EditorService {
                     options: { inlineClassName: "missingLine" }
                 };
             });
+    }
+
+    showDiff() {
+        console.log("show diff");
+        //TODO unit test
+        const data = this.getReducedLeft();
+        console.log("reduced left", data);
+        this.writeFormatted(data, this.leftEditor());
+        //this.compare();
+    }
+    getReducedLeft(): any {
+        console.log("state", state);
+        const ids = state.diffs.map(o => o.jsonelementId);
+        return this.toJsonFiltered(state.parsedFirst, ids);
+    }
+    toJsonFiltered(parsedFirst: JsonElement | undefined, ids: string[]): any {
+        if (parsedFirst instanceof JsonPrimitive) {
+            return (parsedFirst as JsonPrimitive).value;
+        } else if (parsedFirst instanceof JsonObject) {
+            const result: any = {};
+            parsedFirst.children
+                .filter(item => ids.includes(item.id))
+                .forEach((value, index, arr) => {
+                    const strKey = value.key as string;
+                    result[strKey] = this.toJsonFiltered(value, ids);
+                });
+            return result;
+        } else if (parsedFirst instanceof JsonArray) {
+            const result: any[] = [];
+            parsedFirst.children
+                .filter(item => ids.includes(item.id))
+                .forEach((item, index) => {
+                    result.push(this.toJsonFiltered(item, ids));
+                });
+            return result;
+        }
     }
 }
 
