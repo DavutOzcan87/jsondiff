@@ -1,4 +1,4 @@
-
+import { v4 as uuid } from 'uuid';
 
 export interface JsonElement {
     children: JsonElement[];
@@ -6,6 +6,7 @@ export interface JsonElement {
     type: string;
     key: string | number;
     isPrimitive(): boolean;
+    readonly id: string;
 }
 
 
@@ -14,6 +15,7 @@ export class JsonArray implements JsonElement {
     dimension = new Dimension(1, 1, 0, 0);
     type = "array";
     key: string | number;
+    id = uuid();
     constructor(key: string | number) {
         this.key = key;
     }
@@ -37,6 +39,7 @@ export class JsonObject implements JsonElement {
     dimension = new Dimension(1, 1, 0, 0);
     type = "object";
     key: string | number = "";
+    id = uuid();
     constructor(key: string | number) {
         this.key = key;
     }
@@ -60,6 +63,7 @@ export class JsonPrimitive implements JsonElement {
     value: any;
     children = [];
     type = "primitive";
+    id = uuid();
     constructor(key: string | number, value: any) {
         this.key = key;
         this.value = value;
@@ -107,11 +111,11 @@ export class Point {
     }
 }
 
-export function parse(obj: any) {
+export function parse(obj: any): JsonElement {
     return parseInternal(obj, new Point(0, 0), "");
 };
 
-const parseInternal = function (obj: any, point: Point, key: string | number) {
+const parseInternal = function (obj: any, point: Point, key: string | number): JsonElement {
     console.log("parse object called", obj);
     // if (obj === null || obj == undefined) {
     //     return EMPTY;

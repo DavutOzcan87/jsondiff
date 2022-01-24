@@ -12,6 +12,8 @@ export class Diff {
 
 export class DiffResult {
     diff: Diff[] = [];
+    left?: JsonElement = undefined;
+    right?: JsonElement = undefined;
 }
 class JsonDiffService {
     findDiffs(first: any, second: any): DiffResult {
@@ -26,7 +28,9 @@ class JsonDiffService {
         console.log("right", right);
         const diff = this.getDiffOfNodes(left, right);
         return {
-            diff: diff
+            diff: diff,
+            left,
+            right
         };
     }
 

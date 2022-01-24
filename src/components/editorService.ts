@@ -3,12 +3,15 @@ import { Diff, jsonDiffService } from "./jsonDiffService";
 import { samples } from "./samples";
 import { editor } from "monaco-editor";
 import { JsonParseException } from "./exceptions";
+import { JsonElement } from "./jsonnode";
 
 
 class State {
     first: any;
     second: any;
     diffs: Diff[] = [];
+    parsedFirst?: JsonElement = undefined;
+    parsedSecond?: JsonElement = undefined;
 };
 
 const state = new State();
