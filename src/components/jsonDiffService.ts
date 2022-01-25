@@ -69,7 +69,8 @@ class JsonDiffService {
             startLineNumber: node.dimension.startLineNumber,
             startColumn: node.dimension.startColumn,
             endLineNumber: node.dimension.endLineNumber,
-            endColumn: node.dimension.endColumn
+            endColumn: node.dimension.endColumn,
+            jsonelementId: node.id
         } as Diff;
     }
 
@@ -91,7 +92,8 @@ class JsonDiffService {
                 startLineNumber: right.dimension.startLineNumber,
                 startColumn: right.dimension.startColumn,
                 endLineNumber: right.dimension.endLineNumber,
-                endColumn: right.dimension.endColumn
+                endColumn: right.dimension.endColumn,
+                jsonelementId: right.id
             } as Diff;
             return [diff];
         } else return [];

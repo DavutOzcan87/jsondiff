@@ -179,3 +179,30 @@ test("should find when a field value is null", () => {
         ]
     });
 });
+
+
+test("should set id when change is addition", () => {
+    const first = {
+
+    };
+    const second = {
+        "name": "test"
+    };
+    const result = jsonDiffService.findDiffs(first, second);
+    const changeElement = result.right.children[0];
+    expect(changeElement.key).toBe("name");
+    expect(changeElement.id).toBe(result.diff[0].jsonelementId);
+});
+
+test("should set id when change is field value change", () => {
+    const first = {
+        "name": "test"
+    };
+    const second = {
+        "name": "test2"
+    };
+    const result = jsonDiffService.findDiffs(first, second);
+    const changeElement = result.right.children[0];
+    expect(changeElement.key).toBe("name");
+    expect(changeElement.id).toBe(result.diff[0].jsonelementId);
+});
