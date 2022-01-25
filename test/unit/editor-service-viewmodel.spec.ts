@@ -47,7 +47,7 @@ test("should calculate reduced when changed object is nested", () => {
         {
             owner: {
                 name: "davut",
-                age: 34
+                //age: 34
             }
         }
     );

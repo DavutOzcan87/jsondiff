@@ -12,6 +12,11 @@ class State {
     reducedRight: any;
 };
 
+class Reducable {
+    hasElement = false;
+    key: string | number = "";
+    value: any = {};
+}
 
 
 
@@ -35,34 +40,89 @@ class EditorServiceViewModel {
     getReducedRight() {
         console.log("state", state);
         const ids = state.diffs.map(o => o.jsonelementId);
-        return this.toJsonFiltered(state.parsedSecond, ids);
+        return this.toJsonFiltered(state.parsedSecond, id => ids.includes(id)).value;
     }
     getReducedLeft(): any {
         console.log("state", state);
         const ids = state.diffs.map(o => o.jsonelementId);
-        return this.toJsonFiltered(state.parsedFirst, ids);
+        return this.toJsonFiltered(state.parsedFirst, id => ids.includes(id)).value;
     }
 
-    toJsonFiltered(parsedFirst: JsonElement | undefined, ids: string[]): any {
-        if (parsedFirst instanceof JsonPrimitive) {
-            return (parsedFirst as JsonPrimitive).value;
-        } else if (parsedFirst instanceof JsonObject) {
-            const result: any = {};
-            parsedFirst.children
-                .filter(item => ids.includes(item.id))
-                .forEach((value, index, arr) => {
-                    const strKey = value.key as string;
-                    result[strKey] = this.toJsonFiltered(value, ids);
-                });
-            return result;
-        } else if (parsedFirst instanceof JsonArray) {
+    toJsonFiltered(element: JsonElement | undefined, idFilter: (id: string) => boolean): Reducable {
+        if (element instanceof JsonPrimitive) {
+            return this.toJsonFilteredPrimitive(element as JsonPrimitive, idFilter);
+        } else if (element instanceof JsonObject) {
+            return this.toJsonFilteredObject(element as JsonObject, idFilter);
+        } else if (element instanceof JsonArray) {
+            return this.toJsonFilteredArray(element as JsonArray, idFilter);
+        } else {
+            return {
+                hasElement: false,
+                key: "",
+                value: undefined
+            };
+        }
+    }
+    toJsonFilteredArray(arg0: JsonArray, idFilter: (id: string) => boolean): Reducable {
+        if (idFilter(arg0.id)) {
+            return {
+                hasElement: true,
+                key: arg0.key,
+                value: this.toJsonFiltered(arg0, o => true).value
+            };
+        } else {
             const result: any[] = [];
-            parsedFirst.children
-                .filter(item => ids.includes(item.id))
-                .forEach((item, index) => {
-                    result.push(this.toJsonFiltered(item, ids));
-                });
-            return result;
+            const filteredChildren = arg0.children
+                .map(item => this.toJsonFiltered(item, idFilter))
+                .filter(item => item.hasElement);
+            filteredChildren.forEach(item => {
+                result.push(item.value);
+            });
+            return {
+                hasElement: filteredChildren.length > 0,
+                key: arg0.key,
+                value: result
+            };
+        }
+
+    }
+    toJsonFilteredObject(arg0: JsonObject, idFilter: (id: string) => boolean): Reducable {
+        if (idFilter(arg0.id)) {
+            return {
+                hasElement: true,
+                key: arg0.key,
+                value: this.toJsonFiltered(arg0, o => true).value
+            };
+        } else {
+            const result: any = {};
+            const filteredChildren = arg0.children
+                .map(item => this.toJsonFiltered(item, idFilter))
+                .filter(item => item.hasElement);
+            filteredChildren.forEach(item => {
+                const strKey = item.key as string;
+                result[strKey] = item.value;
+            });
+            return {
+                hasElement: filteredChildren.length > 0,
+                key: arg0.key,
+                value: result
+            };
+        }
+
+    }
+
+
+    toJsonFilteredPrimitive(arg0: JsonPrimitive, idFilter: (id: string) => boolean): Reducable {
+        if (idFilter(arg0.id)) {
+            return {
+                hasElement: true,
+                key: arg0.key,
+                value: arg0.value
+            };
+        } else {
+            return {
+                hasElement: false
+            } as Reducable;
         }
     }
 
