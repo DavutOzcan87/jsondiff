@@ -4,17 +4,10 @@ import { samples } from "./samples";
 import { editor } from "monaco-editor";
 import { JsonParseException } from "./exceptions";
 import { JsonArray, JsonElement, JsonObject, JsonPrimitive } from "./jsonnode";
+import { viewModel, state } from "./editor-service-viewmodel";
 
 
-class State {
-    first: any;
-    second: any;
-    diffs: Diff[] = [];
-    parsedFirst?: JsonElement = undefined;
-    parsedSecond?: JsonElement = undefined;
-};
 
-const state = new State();
 
 class EditorService {
     editors: {
@@ -47,16 +40,12 @@ class EditorService {
         this.rightEditor().setValue(JSON.stringify(samples[sampleIndex].right, undefined, 4));
     }
     compare() {
-
         this.clear();
-        state.first = this.parseLeftDocument();
-        state.second = this.parseRightDocument();
-        this.writeFormatted(state.first, this.leftEditor());
-        this.writeFormatted(state.second, this.rightEditor());
-        const diffResult = jsonDiffService.findDiffs(state.first, state.second);
-        state.diffs = diffResult.diff;
-        state.parsedFirst = diffResult.left;
-        state.parsedSecond = diffResult.right;
+        const leftObject = this.parseLeftDocument();
+        const rightObject = this.parseRightDocument();
+        this.writeFormatted(leftObject, this.leftEditor());
+        this.writeFormatted(rightObject, this.rightEditor());
+        viewModel.compare(leftObject, rightObject);
 
         console.log("diffs", state.diffs);
         const rightDecorations = this._extratRightDecorations(state.diffs);
@@ -127,38 +116,14 @@ class EditorService {
     showDiff() {
         console.log("show diff");
         //TODO unit test
-        const data = this.getReducedLeft();
-        console.log("reduced left", data);
-        this.writeFormatted(data, this.leftEditor());
+        viewModel.calculateReducedJson();
+        console.log("reduced left", state.reducedLeft);
+        this.writeFormatted(state.reducedLeft, this.leftEditor());
+        this.writeFormatted(state.reducedRight, this.rightEditor());
         //this.compare();
     }
-    getReducedLeft(): any {
-        console.log("state", state);
-        const ids = state.diffs.map(o => o.jsonelementId);
-        return this.toJsonFiltered(state.parsedFirst, ids);
-    }
-    toJsonFiltered(parsedFirst: JsonElement | undefined, ids: string[]): any {
-        if (parsedFirst instanceof JsonPrimitive) {
-            return (parsedFirst as JsonPrimitive).value;
-        } else if (parsedFirst instanceof JsonObject) {
-            const result: any = {};
-            parsedFirst.children
-                .filter(item => ids.includes(item.id))
-                .forEach((value, index, arr) => {
-                    const strKey = value.key as string;
-                    result[strKey] = this.toJsonFiltered(value, ids);
-                });
-            return result;
-        } else if (parsedFirst instanceof JsonArray) {
-            const result: any[] = [];
-            parsedFirst.children
-                .filter(item => ids.includes(item.id))
-                .forEach((item, index) => {
-                    result.push(this.toJsonFiltered(item, ids));
-                });
-            return result;
-        }
-    }
+
+
 }
 
 const editorService = new EditorService();
