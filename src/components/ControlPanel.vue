@@ -6,7 +6,7 @@
             <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
             <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
             <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
-            <Button class="btn p-button-secondary" v-on:click="showDiff">Only diff</Button>
+            <Button class="btn p-button-secondary" v-on:click="showDiff" :disabled="!compareClicked">Only diff</Button>
         </div>
         <div class="bottom-area">
             <legend-component />
@@ -21,6 +21,11 @@ import LegendComponent from "./LegendComponent.vue";
 export default {
     components: { LegendComponent },
     name: "ControlPanelComponent",
+    data() {
+        return {
+            compareClicked: false,
+        };
+    },
     methods: {
         loadSample: function () {
             editorService.loadSampleData(0);
@@ -32,6 +37,8 @@ export default {
             editorService.loadSampleData(2);
         },
         compare: function () {
+            console.log("data", this.$data);
+            this.$data.compareClicked = true;
             store.clear();
             editorService.compare();
             if (editorService.diffCount == 0) {
@@ -41,6 +48,7 @@ export default {
         clear: function () {
             editorService.clear();
             store.clear();
+            this.$data.compareClicked = false;
         },
         showDiff() {
             editorService.showDiff();

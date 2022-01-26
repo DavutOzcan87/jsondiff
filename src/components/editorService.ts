@@ -120,6 +120,13 @@ class EditorService {
         console.log("reduced left", state.reducedLeft);
         this.writeFormatted(state.reducedLeft, this.leftEditor());
         this.writeFormatted(state.reducedRight, this.rightEditor());
+        const compareResult = viewModel.compareImmutable(state.reducedLeft, state.reducedRight);
+        const rightDecorations = this._extratRightDecorations(compareResult.diffs);
+        const leftEditorDecorations = this._extractLeftDecorations(compareResult.diffs);
+        console.log("right decorations", rightDecorations);
+        console.log("leftDecorations", leftEditorDecorations);
+        this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
+        this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
         //this.compare();
     }
 

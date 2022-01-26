@@ -19,6 +19,14 @@ class Reducable {
 }
 
 
+class CompareResult {
+    first: any;
+    second: any;
+    diffs: Diff[] = [];
+    parsedFirst?: JsonElement = undefined;
+    parsedSecond?: JsonElement = undefined;
+}
+
 
 class EditorServiceViewModel {
     calculateReducedJson() {
@@ -28,12 +36,23 @@ class EditorServiceViewModel {
         state.reducedRight = rightData;
     }
     compare(first: any, second: any) {
-        state.first = first;
-        state.second = second;
-        const diffResult = jsonDiffService.findDiffs(state.first, state.second);
-        state.diffs = diffResult.diff;
-        state.parsedFirst = diffResult.left;
-        state.parsedSecond = diffResult.right;
+        const compareResult = this.compareImmutable(first, second);
+        state.first = compareResult.first;
+        state.second = compareResult.second;
+        state.diffs = compareResult.diffs;
+        state.parsedFirst = compareResult.parsedFirst;
+        state.parsedSecond = compareResult.parsedSecond;
+    }
+
+    compareImmutable(first: any, second: any): CompareResult {
+        const result = new CompareResult();
+        result.first = first;
+        result.second = second;
+        const diffResult = jsonDiffService.findDiffs(result.first, result.second);
+        result.diffs = diffResult.diff;
+        result.parsedFirst = diffResult.left;
+        result.parsedSecond = diffResult.right;
+        return result;
     }
 
 
