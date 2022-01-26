@@ -39,13 +39,23 @@ class EditorServiceViewModel {
 
     getReducedRight() {
         console.log("state", state);
-        const ids = state.diffs.map(o => o.jsonelementId);
-        return this.toJsonFiltered(state.parsedSecond, id => ids.includes(id)).value;
+        const idSet = this.changeItemIds();
+        return this.toJsonFiltered(state.parsedSecond, id => idSet.has(id)).value;
     }
     getReducedLeft(): any {
         console.log("state", state);
-        const ids = state.diffs.map(o => o.jsonelementId);
-        return this.toJsonFiltered(state.parsedFirst, id => ids.includes(id)).value;
+        const idSet = this.changeItemIds();
+        return this.toJsonFiltered(state.parsedFirst, id => idSet.has(id)).value;
+    }
+
+    private changeItemIds() {
+        return state.diffs.reduce((set, item) => {
+            set.add(item.jsonelementId);
+            if (item.originValueJsonElementId !== undefined && item.originValueJsonElementId.length > 0) {
+                set.add(item.originValueJsonElementId);
+            }
+            return set;
+        }, new Set());
     }
 
     toJsonFiltered(element: JsonElement | undefined, idFilter: (id: string) => boolean): Reducable {

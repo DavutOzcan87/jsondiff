@@ -206,3 +206,15 @@ test("should set id when change is field value change", () => {
     expect(changeElement.key).toBe("name");
     expect(changeElement.id).toBe(result.diff[0].jsonelementId);
 });
+
+
+test("should set origin value item element id", () => {
+    const first = {
+        "name": "test"
+    };
+    const second = {
+        "name": "test2"
+    };
+    const result = jsonDiffService.findDiffs(first, second);
+    expect(result.left.children[0].id).toBe(result.diff[0].originValueJsonElementId);
+});

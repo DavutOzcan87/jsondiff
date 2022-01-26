@@ -9,6 +9,7 @@ export class Diff {
     endLineNumber = 0;
     endColumn = 0;
     jsonelementId = "";
+    originValueJsonElementId = ""
 };
 
 export class DiffResult {
@@ -93,7 +94,8 @@ class JsonDiffService {
                 startColumn: right.dimension.startColumn,
                 endLineNumber: right.dimension.endLineNumber,
                 endColumn: right.dimension.endColumn,
-                jsonelementId: right.id
+                jsonelementId: right.id,
+                originValueJsonElementId: left.id
             } as Diff;
             return [diff];
         } else return [];

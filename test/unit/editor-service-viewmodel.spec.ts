@@ -47,7 +47,7 @@ test("should calculate reduced when changed object is nested", () => {
         {
             owner: {
                 name: "davut",
-                //age: 34
+                age: 34
             }
         }
     );
@@ -57,6 +57,27 @@ test("should calculate reduced when changed object is nested", () => {
                 age: 35,
                 surname: "ozcan"
             }
+        }
+    );
+});
+
+test("should calculate reduced when changed object is value change", () => {
+    const first = {
+        id: "test"
+    };
+    const second = {
+        id: "test2"
+    };
+    viewModel.compare(first, second);
+    viewModel.calculateReducedJson();
+    expect(state.reducedLeft).toMatchObject(
+        {
+            id: "test"
+        }
+    );
+    expect(state.reducedRight).toMatchObject(
+        {
+            id: "test2"
         }
     );
 });
