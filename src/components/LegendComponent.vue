@@ -4,14 +4,17 @@
             <tr>
                 <td><div class="rectangle missingLine"></div></td>
                 <td><span>property removal</span></td>
+                <td><span v-text="removalCount"></span></td>
             </tr>
             <tr>
                 <td><div class="rectangle newLine"></div></td>
                 <td><span>property addition</span></td>
+                <td><span v-text="additionCount"></span></td>
             </tr>
             <tr>
                 <td><div class="rectangle valueChanged"></div></td>
                 <td><span>value change</span></td>
+                <td><span v-text="valueChangeCount"></span></td>
             </tr>
         </table>
     </div>
@@ -20,6 +23,11 @@
 <script>
 export default {
     name: "LevendComponent",
+    props: {
+        additionCount: Number,
+        removalCount: Number,
+        valueChangeCount: Number,
+    },
 };
 </script>
 

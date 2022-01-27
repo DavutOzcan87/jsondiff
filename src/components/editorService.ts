@@ -131,6 +131,14 @@ class EditorService {
     }
 
 
+    getCounts(): { adds: number, removes: number, valueChanges: number } {
+        return {
+            adds: state.diffs.filter(o => o.isAdd).length,
+            removes: state.diffs.filter(o => o.isRemoved).length,
+            valueChanges: state.diffs.filter(o => o.isValueChanged).length
+        }
+    }
+
 }
 
 const editorService = new EditorService();

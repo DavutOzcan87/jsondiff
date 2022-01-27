@@ -9,7 +9,11 @@
             <Button class="btn p-button-secondary" v-on:click="showDiff" :disabled="!compareClicked">Only diff</Button>
         </div>
         <div class="bottom-area">
-            <legend-component />
+            <legend-component
+                :additionCount="additionCount"
+                :removalCount="removalCount"
+                :valueChangeCount="valueChangeCount"
+            />
         </div>
     </div>
 </template>
@@ -24,6 +28,9 @@ export default {
     data() {
         return {
             compareClicked: false,
+            additionCount: 0,
+            removalCount: 0,
+            valueChangeCount: 0,
         };
     },
     methods: {
@@ -37,6 +44,7 @@ export default {
             editorService.loadSampleData(2);
         },
         compare: function () {
+            this.$data.additionCount = this.$data.additionCount + 1;
             console.log("data", this.$data);
             this.$data.compareClicked = true;
             store.clear();
@@ -44,6 +52,10 @@ export default {
             if (editorService.diffCount == 0) {
                 store.onNoDiffFound();
             }
+            const counts = editorService.getCounts();
+            this.$data.additionCount = counts.adds;
+            this.$data.removalCount = counts.removes;
+            this.$data.valueChangeCount = counts.valueChanges;
         },
         clear: function () {
             editorService.clear();

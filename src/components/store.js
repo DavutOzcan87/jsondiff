@@ -13,6 +13,9 @@ const store = {
     objs: []
   }),
 
+
+
+
   addError(err) {
     this.error.objs.push({
       text: err,
