@@ -4,8 +4,8 @@
             <Button class="btn p-button-secondary" v-on:click="loadSample" value="Sample">Sample 1</Button>
             <Button class="btn p-button-secondary" v-on:click="loadSample2" value="Sample">Sample 2</Button>
             <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
-            <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
-            <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
+            <Button class="btn p-button-secondary" v-on:click="compare" :disabled="compareClicked">Compare</Button>
+            <Button class="btn p-button-secondary" v-on:click="clear" :disabled="!compareClicked">Clear</Button>
             <Button
                 class="btn p-button-secondary"
                 v-on:click="onShowOnDiffClicked"
@@ -63,6 +63,8 @@ export default {
             this.$data.additionCount = counts.adds;
             this.$data.removalCount = counts.removes;
             this.$data.valueChangeCount = counts.valueChanges;
+            this.$data.onlyDiffShowed = false;
+            this.adjustShowOnlyDiffButtonLabels();
         },
         clear: function () {
             editorService.clear();
@@ -73,6 +75,7 @@ export default {
             this.$data.removalCount = 0;
             this.$data.valueChangeCount = 0;
             this.$data.onlyDiffShowed = false;
+            this.adjustShowOnlyDiffButtonLabels();
         },
         onShowOnDiffClicked() {
             editorService.showDiff();
@@ -83,6 +86,9 @@ export default {
             }
 
             this.$data.onlyDiffShowed = !this.$data.onlyDiffShowed;
+            this.adjustShowOnlyDiffButtonLabels();
+        },
+        adjustShowOnlyDiffButtonLabels() {
             if (this.$data.onlyDiffShowed === true) {
                 this.$data.showOnlyChnagesLabel = "Show Original";
             } else {
