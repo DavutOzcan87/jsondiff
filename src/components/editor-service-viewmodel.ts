@@ -29,6 +29,13 @@ class CompareResult {
 
 
 class EditorServiceViewModel {
+    resetState() {
+        state.diffs = [];
+        state.first = {};
+        state.second = {};
+        state.parsedFirst = undefined;
+        state.parsedSecond = undefined;
+    }
     calculateReducedJson() {
         const data = this.getReducedLeft();
         const rightData = this.getReducedRight();

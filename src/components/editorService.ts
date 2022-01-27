@@ -85,6 +85,7 @@ class EditorService {
         if (this.rightIds) {
             this.rightEditor().deltaDecorations(this.rightIds, []);
         }
+        //viewModel.resetState();
     }
 
     writeFormatted(obj: any, editor: any) {
@@ -131,12 +132,28 @@ class EditorService {
     }
 
 
+    showOriginal() {
+        this.writeFormatted(state.first, this.leftEditor());
+        this.writeFormatted(state.second, this.rightEditor());
+        const rightDecorations = this._extratRightDecorations(state.diffs);
+        const leftEditorDecorations = this._extractLeftDecorations(state.diffs);
+        console.log("right decorations", rightDecorations);
+        console.log("leftDecorations", leftEditorDecorations);
+        this.rightIds = this.rightEditor().deltaDecorations([], rightDecorations);
+        this.leftIds = this.leftEditor().deltaDecorations([], leftEditorDecorations);
+    }
+
     getCounts(): { adds: number, removes: number, valueChanges: number } {
         return {
             adds: state.diffs.filter(o => o.isAdd).length,
             removes: state.diffs.filter(o => o.isRemoved).length,
             valueChanges: state.diffs.filter(o => o.isValueChanged).length
         }
+    }
+
+    showOriginalValues() {
+        this.writeFormatted(state.first, this.leftEditor());
+        this.writeFormatted(state.second, this.rightEditor());
     }
 
 }

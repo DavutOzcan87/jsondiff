@@ -6,7 +6,12 @@
             <Button class="btn p-button-secondary" v-on:click="loadSample3" value="Sample">Sample 3</Button>
             <Button class="btn p-button-secondary" v-on:click="compare">Compare</Button>
             <Button class="btn p-button-secondary" v-on:click="clear">Clear</Button>
-            <Button class="btn p-button-secondary" v-on:click="showDiff" :disabled="!compareClicked">Only diff</Button>
+            <Button
+                class="btn p-button-secondary"
+                v-on:click="onShowOnDiffClicked"
+                :disabled="!compareClicked"
+                :label="showOnlyChnagesLabel"
+            ></Button>
         </div>
         <div class="bottom-area">
             <legend-component
@@ -31,6 +36,8 @@ export default {
             additionCount: 0,
             removalCount: 0,
             valueChangeCount: 0,
+            showOnlyChnagesLabel: "Show Only Diffs",
+            onlyDiffShowed: false,
         };
     },
     methods: {
@@ -60,10 +67,27 @@ export default {
         clear: function () {
             editorService.clear();
             store.clear();
+            editorService.showOriginalValues();
             this.$data.compareClicked = false;
+            this.$data.additionCount = 0;
+            this.$data.removalCount = 0;
+            this.$data.valueChangeCount = 0;
+            this.$data.onlyDiffShowed = false;
         },
-        showDiff() {
+        onShowOnDiffClicked() {
             editorService.showDiff();
+            if (this.$data.onlyDiffShowed) {
+                editorService.showOriginal();
+            } else {
+                editorService.showDiff();
+            }
+
+            this.$data.onlyDiffShowed = !this.$data.onlyDiffShowed;
+            if (this.$data.onlyDiffShowed === true) {
+                this.$data.showOnlyChnagesLabel = "Show Original";
+            } else {
+                this.$data.showOnlyChnagesLabel = "Show Only Diffs";
+            }
         },
     },
 };
