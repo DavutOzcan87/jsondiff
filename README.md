@@ -1,5 +1,9 @@
 # jsondiff
 
+A website to compare two json documents online. It may be usefull when u need to find diff on large json files. 
+
+Currently hosted on https://comparejson.davutozcan.info/
+
 ## Project setup
 ```
 npm install
