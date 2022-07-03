@@ -36,13 +36,13 @@ kind: Ingress
 metadata:
   name: jsondiff
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: comparejson.davutozcan.info
+    external-dns.alpha.kubernetes.io/hostname: comparejson.davutozcan.com
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   rules:
-    - host: comparejson.davutozcan.info
+    - host: comparejson.davutozcan.com
       http:
         paths:
           - backend:
@@ -54,5 +54,5 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
-        - comparejson.davutozcan.info
+        - comparejson.davutozcan.com
       secretName: jsondiff
