@@ -36,9 +36,7 @@ kind: Ingress
 metadata:
   name: jsondiff
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: comparejson.davutozcan.com
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   rules:
